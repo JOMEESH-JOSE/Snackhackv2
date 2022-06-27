@@ -174,6 +174,12 @@
         document.myform.file.focus();
         return false;
       }
+      var img = /(\.jpg|\.png|\.jpeg)$/i; 
+      if (!img.test(document.myform.file.value)) {
+        alert("please enter valid image");
+        return false;
+
+      }
       if (document.myform.address.value.trim() == "") {
         alert("Please put your address");
         document.myform.address.focus();
@@ -245,6 +251,12 @@
         alert("Please put your proof");
         document.myform.files.focus();
         return false;
+      }
+      var img = /(\.jpg|\.png|\.jpeg)$/i; 
+      if (!img.test(document.myform.files.value)) {
+        alert("please enter valid image");
+        return false;
+
       }
       if (document.myform.expert.value == "") {
         alert("Please put you are Expert in");

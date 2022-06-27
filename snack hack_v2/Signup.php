@@ -78,7 +78,7 @@ if(isset($_POST['Signup'])){
 					<span class="login100-form-title">
 					 Sign up
 					</span>
-					<span id="veri" style="color:red"></span>
+				
                     <div class="wrap-input100">
 						<input class="input100" type="text" name="name" id="name" placeholder="name" onclick="return cl();">
 						<span class="focus-input100"></span>
@@ -183,13 +183,13 @@ if(isset($_POST['Signup'])){
 						</span>
 					</div>
                     <div class="wrap-input100">
-						<input class="input100" type="file" name="file" placeholder="image"  id="file" accept="image/png, image/gif, image/jpeg" onclick="return cl();">
+						<input class="input100" type="file" name="file" placeholder="image"  id="file" accept="image/png, image/gif, image/jpeg" onclick="return cl();" onchange="return filevalid();">
 						<span class="focus-input100"></span>
 						<span class="symbol-input100">
                         <i class="fa fa-file" aria-hidden="true"></i>
 						</span>
 					</div>
-					
+					<span id="veri" style="color:red"></span>
 					<div class="container-login100-form-btn">
 						<input type="submit" class="login100-form-btn" value="Signup" name="Signup">
 						
@@ -292,6 +292,16 @@ function sign() {
 }
 function cl(){
 document.getElementById("veri").innerHTML=" ";
+}
+function filevalid(){
+	var im = document.myform.file;
+	var filePath = im.value;
+	var img = /(\.jpg|\.png|\.jpeg)$/i;
+	if(!img.exec(filePath)){
+		document.getElementById('veri').innerHTML ="**Please choose a image !!";
+		return false;
+	}
+
 }
 
 	</script>

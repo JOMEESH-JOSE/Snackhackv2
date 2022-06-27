@@ -29,8 +29,11 @@ $as = mysqli_query($conn,$qq);
                             $status = $a['status'];
                             if($status =='REJECT'){
                                 $text = "Your booking has been cancelled due to a lack of availability";
-                            }else{
+                            }else if($status =='YES'){
                                 $text = "Your booking has been Approved";
+                            }
+                            else{
+                                $text = "Your booking has been Waiting for the Chef approval";
                             }
                         ?>
                     <div class="p-3 d-flex align-items-center bg-light border-bottom osahan-post-header">
@@ -39,7 +42,7 @@ $as = mysqli_query($conn,$qq);
                             <img class="rounded-circle" src="../employee/docs/image/<?php echo $img; ?>" alt=""  />
                         </div>
                         <div class="font-weight-bold mr-3">
-                            <div class="text-truncate"><?php echo $cname; ?></div>
+                            <div class="text-truncate">Chef Name:<?php echo $cname; ?></div>
                             <div class="small"><?php  echo $text; ?></div>
                         </div>
                         <span class="ml-auto mb-auto">

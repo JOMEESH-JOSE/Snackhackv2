@@ -39,7 +39,7 @@ $q2 = mysqli_query($conn, $sq);
                             <td><?php echo $row['food total price']; ?></td>
                             <td><?php echo $row['Order_time']; ?></td>
                             <td><?php echo $row['Payment_status']; ?></td>
-                            <td><a href="payment_update.php?a_id=<?php echo $row['order_id'];?>"><Button type="submit" class="btn btn-primary">PAY</Button></td>
+                            <td><a href="payment_update.php?a_id=<?php echo $row['order_id'];?>"><Button type="submit" class="btn btn-">PAY</Button></td>
                         </tr>
                     <?php } ?>
                 </tbody>

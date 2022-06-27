@@ -1,9 +1,16 @@
 <?php
 include 'header.php';
 include 'db.php';
-$sq = "SELECT * FROM `order_tb` join `food_tb` on food_tb.fd_id = order_tb.food_id WHERE  order_tb.status ='0' AND order_tb.Payment_status='PAID'";
 
+// Return current date from the remote server
+date_default_timezone_set('Asia/Kolkata');
+$date = date('Y-m-d');
+
+$sq = "SELECT * FROM `order_tb` join `food_tb` on food_tb.fd_id = order_tb.food_id WHERE  order_tb.status ='0' AND order_tb.Payment_status='PAID'";
+$sq1="SELECT f.`food name`,o.table_id,o.foodquantity,o.`food total price`,DATE(o.`Order_time`) AS date,TIME(o.`Order_time`)AS time FROM `order_tb` o,food_tb f WHERE status='DELIVERED' AND Payment_status='PAID' AND o.food_id = f.fd_id and DATE(o.Order_time)='$date'";
 $q2=mysqli_query($conn,$sq);
+$q3=mysqli_query($conn,$sq1);
+
 ?>
     <main class="app-content">
       <div class="app-title">
@@ -40,6 +47,33 @@ $q2=mysqli_query($conn,$sq);
 </table>
           </div>
       </div>
+      <div class="col-md-9">
+          <div class="tile">
+            <h3 class="tile-title">Order Details</h3>
+            <table class="table table-bordered" id="sampleTable">
+  <thead class="table-light">
+  <th>Table number</th>
+    <th>Food Name</th>
+    <th>Quantity</th>
+    <th>Total price</th>
+    <th>Date</th>
+    <th>Time</th>
+  </thead>
+  <tbody>
+    <?php while($row1 = mysqli_fetch_array($q3)){?>
+      <tr>
+      <td><?php echo $row1['table_id']; ?></td>
+      <td><?php echo $row1['food name']; ?></td>
+      <td><?php echo $row1['foodquantity']; ?></td>
+      <td><?php echo $row1['food total price']; ?></td>
+      <td><?php echo $row1['date']; ?></td>
+      <td><?php echo $row1['time']; ?></td>
+      </tr>
+      <?php } ?>
+  </tbody>
+</table>
+          </div>
+      </div>
           
     </main>
     <!-- Essential javascripts for application to work-->
@@ -47,6 +81,10 @@ $q2=mysqli_query($conn,$sq);
     <script src="js/popper.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
     <script src="js/main.js"></script>
+<!-- Data table plugin-->
+<script type="text/javascript" src="js/plugins/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="js/plugins/dataTables.bootstrap.min.js"></script>
+    <script type="text/javascript">$('#sampleTable').DataTable();</script>
     <!-- The javascript plugin to display page loading on top-->
     <script src="js/plugins/pace.min.js"></script>
     <!-- Page specific javascripts-->

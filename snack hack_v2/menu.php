@@ -1,4 +1,24 @@
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<style>
+	.blog .carousel-indicators {
+	left: 0;
+	top: auto;
+    bottom: -40px;
 
+}
+
+/* The colour of the indicators */
+.blog .carousel-indicators li {
+    background: #a3a3a3;
+    border-radius: 50%;
+    width: 8px;
+    height: 8px;
+}
+
+.blog .carousel-indicators .active {
+background: #707070;
+}
+</style>
 	<?php
 	
 	include 'header.php';
@@ -16,16 +36,39 @@
 		$foods = mysqli_query($conn,$food);
 		$row = mysqli_fetch_assoc($foods);
 		$totalprice=0;
+		$totalprice1=0;
+		$countt = 0;
 		$price=$row['food_price'];
 		if($quantity<=$row['quantity']){ 
-		   $totalprice=$quantity*$price;
-           $sql2 = "INSERT INTO cart(foodid,Lg_id,table_id,quantity,price,totalprice) VALUES($foodid,'NA',$tb,$quantity,$price,$totalprice)";
-		   mysqli_query($conn,$sql2);
+			$ss=mysqli_query($conn,"SELECT foodid,table_id FROM `cart` where foodid='$foodid' and table_id='$tb'");
+			$coun = mysqli_num_rows($ss);
+			if($coun == 0){
+				$totalprice=$quantity*$price;
+				$sql2 = "INSERT INTO cart(foodid,Lg_id,table_id,quantity,price,totalprice) VALUES($foodid,'NA',$tb,$quantity,$price,$totalprice)";
+				mysqli_query($conn,$sql2);
+	 
+				$sql3="UPDATE food_tb SET quantity=quantity-$quantity where fd_id=$foodid";
+				mysqli_query($conn,$sql3);
+	 
+				echo"<script>alert('Added to Cart')</script>";
+			}
+		  else{
+			$col = mysqli_query($conn,"SELECT quantity,totalprice FROM `cart` where foodid='$foodid' and table_id='$tb'");
+			$find = mysqli_fetch_assoc($col);
+			$prize=$find['totalprice'];
+			$count1=$find['quantity'];
+// totalprice
+            $totalprice1 = $quantity*$price;
+			$sum = $totalprice1+$prize;
+			// quantity
+			$countt=$count1+$quantity;
+			$up = mysqli_query($conn,"UPDATE `cart` SET `quantity`='$countt',`totalprice`='$sum' WHERE foodid='$foodid' and table_id='$tb'");
 
-		   $sql3="UPDATE food_tb SET quantity=quantity-$quantity where fd_id=$foodid";
-		   mysqli_query($conn,$sql3);
-
-		   echo"<script>alert('Added to Cart')</script>";
+			$sql1="UPDATE food_tb SET quantity=quantity-$quantity where fd_id=$foodid";
+				mysqli_query($conn,$sql1);
+	 
+				echo"<script>alert('Updated to Cart')</script>";
+		  }
 		
 		                               }
 		else{echo"<script>alert('Out of Stock')</script>";
@@ -67,15 +110,16 @@
                             $result = mysqli_query($conn,"SELECT * FROM food_tb where category_id='$sid'");
                                 while ($raw = mysqli_fetch_array($result)){ ?>
 								
-								<div class="col-lg-4 col-md-6 special-grid 1">
+								<div class="col-lg-5 col-md-6 special-grid 1">
 								<!-- <form method="post" action="cart_manage1.php"> -->
 								<form method="post" action="menu.php?pid=<?php echo $sid; ?>">
 									<div class="gallery-single fix">
-										<img src="../employee/docs/image/<?php echo $raw['food_img']; ?>" class="img-fluid" alt="Image" height="80px">
+										<img src="../employee/docs/image/<?php echo $raw['food_img']; ?>"  alt="Image" class="img-fluid">
 										<div class="why-text">
 											<h4><?php echo $raw['food name']; ?></h4>
 											<p><?php echo $raw['description']; ?></p>
-											<h5><?php echo $raw['food_price']; ?></h5>
+											<h4>Available Quantity:<?php echo $raw['quantity']; ?></h4>
+											<h5>Rs<?php echo $raw['food_price']; ?></h5>
 											<?php if($raw['quantity'] == 0) { ?>
 												<p style="color:red"> Food Outofstock</p>
 
@@ -83,7 +127,7 @@
 
 											<input type="hidden" name="foodid" value="<?php echo $raw['fd_id']; ?>">
 											
-											<input type="number" name="quantity" min="1"style="width:60px;" required>
+											<input type="number" name="quantity" min="1" max="10" maxlength="2" minlength="2" style="width:60px;" required>
 											<input type="submit" style="margin-top:-2px" class="btn-warning"  name="cart" value="add to cart">
 											<!-- <input type="hidden" name="foodname" value="<?php echo $raw['food name']; ?>">
 											<input type="hidden" name="price" value="<?php echo $raw['food_price']; ?>"> -->
@@ -101,7 +145,89 @@
                 </div>
 	</div>
 	<!-- End Menu -->
-	
+	<br>
+	<div class="container">
+            <div class="row blog">
+                <div class="col-md-12">
+                    <div id="blogCarousel" class="carousel slide" data-ride="carousel">
+
+                        <ol class="carousel-indicators">
+                            <li data-target="#blogCarousel" data-slide-to="0" class="active"></li>
+                            <li data-target="#blogCarousel" data-slide-to="1"></li>
+                        </ol>
+
+                        <!-- Carousel items -->
+                        <div class="carousel-inner">
+
+                            <div class="carousel-item active">
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <a href="#">
+                                            <img src="https://mdbootstrap.com/img/Photos/Horizontal/Food/4-col/img%20(53).jpg" alt="Image" height="180px" width="250px" style="max-width:100%;">
+                                            
+                                        </a>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <a href="#">
+                                            <img src="https://mdbootstrap.com/img/Photos/Horizontal/Food/4-col/img%20(51).jpg" alt="Image" height="180px" width="250px" style="max-width:100%;">
+                                            
+                                        </a>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <a href="#">
+                                            <img src="https://i0.wp.com/italiantouch.com.au/wp-content/uploads/2018/06/Big-Breakfast.jpg" alt="Image" height="180px" width="250px" style="max-width:100%;">
+                                            
+                                        </a>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <a href="#">
+                                            <img src="https://www.michels.com.au/app/uploads/2018/07/Big-Breakfast.jpg" alt="Image" height="180px" width="250px" style="max-width:100%;">
+                                            
+                                        </a>
+                                    </div>
+                                </div>
+                                <!--.row-->
+                            </div>
+                            <!--.item-->
+
+                            <div class="carousel-item">
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <a href="#">
+                                           <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRRrrbon2NL50tgA_gB_y2kXSBNle-iQC4ky6diWC7RmYl-gIcDNqWj-U0546kRfBhH7_8&usqp=CAU" alt="Image" height="180px" width="250px" style="max-width:100%;">
+                                            
+                                        </a>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <a href="#">
+                                             <img src="http://www.myadmintemplate.com/images/slideImage10.jpg" alt="Image" height="180px" width="250px" style="max-width:100%;">
+                                            
+                                        </a>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <a href="#">
+                                            <img src="https://myfoodbook.com.au/sites/default/files/styles/sr_mo/public/recipe_photo/Eggs20151375.jpg" alt="Image" height="180px" width="250px" style="max-width:100%;">
+                                        </a>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <a href="#">
+                                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRZ-eXxxLoYdp_KeAfpqtMI9QxtXipqprADicTyeV2yBulHyTnEP_scSCjlDwVEj7RhAbg&usqp=CAU" alt="Image" height="180px" width="250px" style="max-width:100%;">
+                                        </a>
+                                    </div>
+                                </div>
+                                <!--.row-->
+                            </div>
+                            <!--.item-->
+
+                        </div>
+                        <!--.carousel-inner-->
+                    </div>
+                    <!--.Carousel-->
+
+                </div>
+            </div>
+</div>
+<br><br><br>
 	<!-- Start QT -->
 	<div class="qt-box qt-background">
 		<div class="container">
@@ -175,6 +301,25 @@
 	<script src="js/jquery-3.2.1.min.js"></script>
 	<script src="js/popper.min.js"></script>
 	<script src="js/bootstrap.min.js"></script>
+		<!-- recentorder -->
+
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script>
+		$('#blogCarousel').carousel({
+				interval: 100
+		});
+</script>
+<script>
+	function onlyNumberKey(evt) {
+          
+          // Only ASCII character in that range allowed
+          var ASCIICode = (evt.which) ? evt.which : evt.keyCode
+          if (ASCIICode > 31 && (ASCIICode < 48 || ASCIICode > 57))
+              return false;
+          return true;
+      }
+</script>
     <!-- ALL PLUGINS -->
 	<script src="js/jquery.superslides.min.js"></script>
 	<script src="js/images-loded.min.js"></script>

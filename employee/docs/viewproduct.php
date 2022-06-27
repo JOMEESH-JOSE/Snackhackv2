@@ -41,7 +41,7 @@ $sql=mysqli_query($conn,"SELECT * FROM `food_tb` inner join category_tb on categ
                   <tr>
                   <td><?php echo $row['food name']; ?></td>
                     <td><?php echo $row['description']; ?></td>
-                    <td><?php echo $row['food_img']; ?></td>
+                    <td><img src="image/<?php echo $row['food_img']; ?>" height="40px" width="60px"></td>
                     <td><?php echo $row['quantity']; ?></td>
                     <td><?php echo $row['food_price']; ?></td>
                     <td><?php echo $row['category']; ?></td>

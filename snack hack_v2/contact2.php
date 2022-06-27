@@ -171,7 +171,7 @@ if(isset($_POST['msg'])){
 	$name = $_POST['name'];
 	$email = $_POST['email'];
 	$ms = $_POST['message'];
-	$qw = "INSERT INTO `review_tb`(`Lg_id`,`name`, `email`, `message`) VALUES ('$uid','$name', '$email', '$ms')";
+	$qw = "INSERT INTO `review_tb`(`Lg_id`,`name`, `email`, `message`,`sts`) VALUES ('$uid','$name', '$email', '$ms','NO')";
 	$qwe=mysqli_query($conn,$qw);
 	echo "<script>alert('Thankyou for your Feedback');</script>";
 	echo "<script>location=index.php</script>";

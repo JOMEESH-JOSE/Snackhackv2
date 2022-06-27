@@ -19,11 +19,12 @@ $row = mysqli_fetch_assoc($ss);
 			<!-- </div>
 		</div>
 	</div> --> -->
+
     <!-- Start Gallery -->
 	<center>
 	<!-- <div class="gallery-box"> -->
 	<div class="container">
-        <div class="col-9">
+        <div class="col-12">
 					<div class="main">
 						
 <!-- text -->
@@ -41,8 +42,11 @@ $row = mysqli_fetch_assoc($ss);
 			<div class="row justify-content-center">
 				<div class="col-md-11 col-lg-">
 					<div class="wrap d-md-flex">
-						<div class="img" style="background-image: url(images/ta.jpg);">
-			      </div>
+						<div class="img">
+							
+							<img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQpBFtjK6sBtSNXjrlTm7J4xAASE0TwuFtfDA&usqp=CAU" width="280px">
+							
+						</div>
 						<div class="login-wrap p-4 p-md-5">
 			      	<div class="d-flex">
 			      		<div class="w-100">
@@ -60,17 +64,26 @@ $row = mysqli_fetch_assoc($ss);
 		              <input type="text"  class="form-control" value="<?php echo $phno ?>"  readonly onclick="return alrt();">
 		            </div>
 					<div class="form-group mb-3">
-		              <select class="form-control" id="tt" name="tb_no" onclick="return cl();">
-					  <option value="select">Select Table</option>
-                       <option value="Table_R1">Table R1</option>
-					   <option value="Table_R2">Table R2</option>
-					   <option value="Table_R3">Table R3</option>
-					   <option value="Table_R4">Table R4</option>
-					   <option value="Table_R5">Table R5</option>
+		              <select class="form-control" id="tt" name="tb_type" onclick="return cl();">
+					  <option value="select">Select Type</option>
+					  <?php 
+					 $ss = "SELECT `p_id`,`p_type` FROM `tbl_persontype`"; 
+					 $ww = mysqli_query($conn,$ss);
+					 while($zx = mysqli_fetch_assoc($ww)){
+
+					 
+					  ?>
+                       <option value="<?php echo $zx['p_id']; ?>"><?php echo $zx['p_type']; ?> </option>
+					  <?php } ?>
 					  </select>
 					 
 		            </div>
-					
+					<div class="form-group mb-3">
+		              <select class="form-control" id="tt2" name="tb_no" onclick="return cl();">
+					  <option value="select">Select Table</option>
+					  </select>
+					 
+		            </div>
 					<div class="form-group mb-3">
 		              <input type="date" id="date" name="date" class="form-control" onclick="return cl();" >
 		            </div>
@@ -110,11 +123,16 @@ $row = mysqli_fetch_assoc($ss);
 	var a = document.getElementById('tt').value;
 	var b = document.getElementById('date').value;
 	var c = document.getElementById('tt1').value;
-
+	var d = document.getElementById('tt2').value;
 if(a == "select"){
 
-	document.getElementById("table").innerHTML="**please select the Table**";
+	document.getElementById("table").innerHTML="**please select the Type**";
 	return false;
+}
+if(d == "select"){
+
+document.getElementById("table").innerHTML="**please select the Table**";
+return false;
 }
 if(b ==""){
 document.getElementById("table").innerHTML="**please select the date**";
@@ -157,6 +175,26 @@ $(function(){
     $('#date').attr('min', minDate);
 });
  </script>
+ <script>
+    $(document).ready(function() {
+      $('#tt').on('change', function() {
+        var re_id = this.value;
+        $.ajax({
+          url: "reservationaction.php",
+          type: "POST",
+          data: {
+            d_id: re_id //d_id is the foreignkey of city table
+          },
+          cache: false,
+          success: function(result) {
+            $("#tt2").html(result);
+
+          }
+        });
+      });
+
+    });
+  </script>
 	<script src="js/jquery-3.2.1.min.js"></script>
   <script src="js/popper.min.js"></script>
   <script src="js/bootstrap.min.js"></script>
@@ -238,7 +276,7 @@ $(function(){
 	<script src="js/jquery-3.2.1.min.js"></script>
 	<script src="js/popper.min.js"></script>
 	<script src="js/bootstrap.min.js"></script>
-	
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <!-- ALL PLUGINS -->
 	<script src="js/jquery.superslides.min.js"></script>
 	<script src="js/images-loded.min.js"></script>
@@ -247,22 +285,29 @@ $(function(){
 	<script src="js/form-validator.min.js"></script>
     <script src="js/contact-form-script.js"></script>
     <script src="js/custom.js"></script>
+<style>
+.img{
+
+	margin-top: 150px;
+}
+
+	</style>
 </body>
 
 </html>
 <?php 
 if(isset($_POST['Book'])){
-
+$tb_type = $_POST['tb_type'];
 	$tb_no = $_POST['tb_no'];
 	$date = $_POST['date'];
 	$time = $_POST['time'];
-
+    
 	$ch = mysqli_query($conn,"SELECT * FROM `reservation` WHERE Table_no = '$tb_no' AND b_date = '$date' AND b_time='$time'");
 
 	$count = mysqli_num_rows($ch);
 	if($count == 0){
 
-		$hh = mysqli_query($conn,"INSERT INTO `reservation`(`Lg_id`, `Table_no`, `b_date`, `b_time`) VALUES ('$uid', '$tb_no', '$date', '$time')");
+		$hh = mysqli_query($conn,"INSERT INTO `reservation`(`Lg_id`,`type`, `Table_no`, `b_date`, `b_time`) VALUES ('$uid','$tb_type','$tb_no', '$date', '$time')");
 		echo "<script type='text/javascript'> alert('You have successfully reserved a table');</script>";
 		header("Location:Reservation.php");
 

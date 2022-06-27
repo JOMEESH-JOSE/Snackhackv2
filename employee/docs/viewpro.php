@@ -22,6 +22,8 @@ $sql=mysqli_query($conn,"SELECT * FROM `food_tb` inner join category_tb on categ
         <div class="col-md-12">
           <div class="tile">
             <div class="tile-body">
+              <button type="button" class="btn btn-" >PDF</button>&ensp;<button type="button" class="btn btn-" >CSV</button>
+              <br><br>
               <table class="table table-hover table-bordered" id="sampleTable">
               <thead>
                 <tr>
@@ -40,7 +42,7 @@ $sql=mysqli_query($conn,"SELECT * FROM `food_tb` inner join category_tb on categ
                   <tr>
                   <td><?php echo $row['food name']; ?></td>
                     <td><?php echo $row['description']; ?></td>
-                    <td><?php echo $row['food_img']; ?></td>
+                    <td><img src="image/<?php echo $row['food_img']; ?>" height="60px" width="60px"></td>
                     <td><?php echo $row['food_price']; ?></td>
                     <td><?php echo $row['quantity']; ?></td>
                     <td><?php echo $row['category']; ?></td> 

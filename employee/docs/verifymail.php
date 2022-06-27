@@ -69,7 +69,7 @@ Don\'t share the Login credentials to anyone. Enjoy using our website..<br>
   </tr>
 </table>
 <div style="margin-top:30px">
-Explore from here--->> <a href="http://localhost/employee/docs/page-login.php">Snackhack</a></div>
+Explore from here--->> <a href="http://localhost/Snackhackv2/employee/docs/page-login.php">Snackhack</a></div>
 </center>
 </body>
 </html>';

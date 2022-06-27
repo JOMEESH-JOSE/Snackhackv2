@@ -8,14 +8,30 @@ $ss = mysqli_query($conn,"SELECT * FROM `chef_reg_tb` where Lg_id ='$id'");
 $QW = mysqli_query($conn,"SELECT * FROM `user_registration_tb` where `login-id`='$uid'");
 $ro = mysqli_fetch_assoc($QW);
 $qq = mysqli_fetch_assoc($ss);
+?>
+<?php 
+// Return current date from the remote server
+date_default_timezone_set('Asia/Kolkata');
+$date = date('Y-m-d');
 
 ?>
+
+
 <?php 
 
 if(isset($_POST['submit'])){
-	$date = $_POST['bdate'];
-    $as = mysqli_query($conn,"INSERT INTO `chef_book`(`user_id`, `chef_id`, `bookdate`,`status`) VALUES ('$uid','$id','$date','NO')");
-	echo "<script type='text/javascript'> alert('You have successfully Book a chef');</script>";
+	$date = $_POST['date'];
+	$event = $_POST['event'];
+	$people = $_POST['people'];
+	$sq = mysqli_query($conn,"SELECT bookdate FROM `chef_book` WHERE bookdate='$date'");
+	$count = mysqli_num_rows($sq);
+	if($count == 0){
+		$as = mysqli_query($conn,"INSERT INTO `chef_book`(`user_id`, `chef_id`, `event`, `peoples`, `bookdate`,`status`) VALUES ('$uid','$id','$event','$people','$date','NO')");
+		echo "<script type='text/javascript'> alert('You have successfully Book a chef');</script>";
+	}
+    else{
+		echo "<script type='text/javascript'> alert('Sorry this Booking date is already Reserved');</script>";
+	}
 	// header("Location:ChefBooking.php");
 }
 ?>
@@ -52,56 +68,87 @@ if(isset($_POST['submit'])){
 </head>
 
 <body>
-	<div id="booking" class="section">
-		<div class="section-center">
-			<div class="container">
-				<div class="row">
-					<div class="booking-form">
-						<div class="booking-bg">
-							<div class="form-header">
-                            <center>
-                            <img src="../employee/docs/image/<?php echo $qq['image']; ?>" style="width: 285px;height: 285px;">
-                            </center>
-								
-								<!-- <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Cupiditate laboriosam numquam at</p> --> 
-							</div>
-						</div>
-						<form method="post" onsubmit="return validate();">
-							
-						<h2>Chef Booking</h2>
-									<div class="form-group">
-										<span class="form-label">Customer name</span>
-										<input class="form-control" type="text" value="<?php echo $ro['name']; ?>" readonly>
-									</div>
-								
-                                    <div class="form-group">
-										<span class="form-label">Chef name</span>
-										<input class="form-control" type="text" value="<?php echo $qq['name']; ?>" readonly>
-									</div>
-									<div class="form-group">
-										<span class="form-label">Expert In</span>
-										<input class="form-control" type="Text" value="<?php echo $qq['Expert']; ?>"readonly>
-									</div>
-									<div class="form-group">
-										<span class="form-label">Phone Number</span>
-										<input class="form-control" type="Text"value="<?php echo $qq['phno']; ?>"readonly>
-										
-									</div>
-							<div class="form-group">
-								<span class="form-label">Booking Date</span>
-								<input type="date" id="date" name="bdate" class="form-control" onclick="return cl();">
-								<span id="table" style="color:red"></span>
-							</div>
+	<div class="container rounded bg-white mt-5">
+        <div class="row">
+            <div class="col-md-4 border-right">
+                <div class="d-flex flex-column align-items-center text-center p-3 py-5"><img class="rounded-lg" src="../employee/docs/image/<?php echo $qq['image']; ?>" width="220px" height="230px"><span class="font-weight-bold"><?php echo $name; ?></span><span class="text-black-50"><?php echo $email; ?></span><span><?php echo $role; ?></span></div>
+            </div>
+            <div class="col-md-8">
+                <div class="p-3 py-5">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <h1>ChefBooking</h1>
+						
+                    </div>
+                    <form method="post" onsubmit="return validate();">
+                    <div class="row mt-2">
+                        <div class="col-md-6">
+                        <label class="fs-4">Chef Name</label>
+                        <div><input type="text" class="form-control" name="name"value="<?php echo $qq['name']; ?>" minlength="2" maxlength="50" readonly></div>
+                        </div>
+                        <div class="col-md-6">
+                        <label class="fs-4">Customer Name</label>
+                        <div><input type="text" class="form-control" name="gender" value="<?php echo $ro['name']; ?>" readonly></div>
+                        </div>
+                         </div>
+                    <div class="row mt-3">
+					<div class="col-md-6">
+                        <label class="fs-4">Expert In</label>
+                        <div><input type="text" class="form-control" name="address" value="<?php echo $qq['Expert']; ?>" readonly></div>
+                    </div>
+					<div class="col-md-6">
+                        <label class="fs-4">Phone Number</label>
+                        <div><input type="text" class="form-control" name="phno" value="<?php echo $qq['phno']; ?>" readonly></div>
+                    </div>
+                   
+                   
+                    </div>
+                    <div class="row mt-3">
+					<div class="col-md-6">
+                        <label class="fs-4">Booking Date</label>
+                        <div><input type="date" class="form-control" name="date" id="date" onclick="return cl();" ></div>
+                    </div>
+					<div class="col-md-6">
+                        <label class="fs-4">Event Type</label>
+                        <div><select class="form-control" id="sel" name="event"  onclick="return cl();">
 
-							<div class="form-btn">
-								<input type="submit" name="submit" class="submit-btn" value="Make Booking">
-							</div>
-						</form>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
+						<option value="select">SELECT EVENT</option>
+						<?php 
+						$ss1 = mysqli_query($conn,"SELECT ev_id,eventname,price FROM `tbl_event`");
+						while ($r = mysqli_fetch_array($ss1)){
+							$id=$r['ev_id'];
+							$nam=$r['eventname']; 
+							// $price = $r['price'];
+							?>
+                           <option value="<?php echo $id;?>"><?php echo $nam; ?></option>
+						<?php }
+
+                     $ss4 = mysqli_query($conn,"SELECT price FROM `tbl_event` where ev_id = '$id'");
+					 $rt = mysqli_fetch_array($ss4);
+					 $price=$rt['price'];
+						?>
+                    
+						</select></div>
+                    </div>
+                    </div>
+					<div class="row mt-3">
+					<div class="col-md-6">
+                        <label class="fs-4">No of Peoples</label>
+                        <div><input type="number" class="form-control" name="people" id="people"  max="100" onclick="return cl();" ></div>
+                    </div>
+					
+					<div class="col-md-6" >
+                        <label class="fs-4">Amount Calculated</label>
+                        <div ><input type="text" class="form-control" id="amount" name ="result"></div>
+                    </div>
+                    </div>
+					<div><span id="table" style="color:red"></span></div>
+                    				<div class="mt-5 text-center"><input type="submit" name="submit" class="btn btn-primary profile-button" value="Book" ></div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+	<br><br>
 	<!-- Start QT -->
 	<div class="qt-box qt-background">
 		<div class="container">
@@ -171,13 +218,22 @@ if(isset($_POST['submit'])){
 	function validate(){
 
 var a = document.getElementById('date').value.trim();
-
-
-if(a == ""){
+var b = document.getElementById('people').value.trim();
+var c = document.getElementById('sel').value;
+if(a==""){
 
 document.getElementById("table").innerHTML="**please select the date**";
 return false;
 }
+else if(c =="select"){
+	document.getElementById("table").innerHTML="**please select the event type**";
+return false;
+}
+else if(b<10){
+	document.getElementById("table").innerHTML="**please enter the value greater than 10**";
+return false;
+}
+
 else{
 	return true;
 }
@@ -205,6 +261,24 @@ $(function(){
     $('#date').attr('min', minDate);
 });
 </script>
+<script>
+//  $( "#amount" ).load( "ajax/response.html #div-with-new-content" ); 
+ 
+$(document).ready(function () {
+        $(function () {
+            $("#people").on("blur", function () {
+                updateTotalNetVehicle();
+            });
+
+        });
+    });
+
+     var updateTotalNetVehicle = function () {
+                var input1 = parseInt($('#people').val()) || 0;
+                var number1 = <?php echo $price; ?>;
+                var sum = input1 * number1;
+                $('#amount').val('$' + sum.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,'));
+            }; </script>
 	<script src="js/jquery-3.2.1.min.js"></script>
 	<script src="js/popper.min.js"></script>
 	<script src="js/bootstrap.min.js"></script>

@@ -2,6 +2,8 @@
 error_reporting(0);
 @session_start();
 $tb = $_SESSION['tb_id'];
+
+
 ?>
 
 <!DOCTYPE html>
@@ -59,7 +61,7 @@ $tb = $_SESSION['tb_id'];
             <li class="nav-item "><a class="nav-link" href="Login.php">Login</a></li>
 						<li class="nav-item"><a class="nav-link" href="about.php">About</a></li>
 						<li class="nav-item"><a class="nav-link" href="contact.php">Contact</a></li>
-            <li class="nav-item"><a class="nav-link" href="cart2.php?t_id=<?php echo $tb ?>">Cart</a></li>
+            <li class="nav-item"><a class="nav-link" href="cart2.php?t_id=<?php echo $tb ?>">Cart<i class="fa fa-shopping-cart" aria-hidden="true"></i></a></li>
 					</ul>
 				</div>
 			</div>

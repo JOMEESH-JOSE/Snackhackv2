@@ -1,7 +1,10 @@
 <?php
 include 'chef_header.php';
 include 'db.php';
-$sq = "SELECT * FROM `order_tb` join `food_tb` on food_tb.fd_id = order_tb.food_id WHERE  status ='Notactive'";
+// Return current date from the remote server
+date_default_timezone_set('Asia/Kolkata');
+$date = date('Y-m-d');
+$sq = "SELECT f.`food name`,o.table_id,o.foodquantity,o.`food total price`,DATE(o.`Order_time`) AS date,TIME(o.`Order_time`)AS time FROM `order_tb` o,food_tb f WHERE status='DELIVERED' AND Payment_status='PAID' AND o.food_id = f.fd_id and DATE(o.Order_time)='$date'";
 
 $q2 = mysqli_query($conn, $sq);
 ?>
@@ -26,7 +29,9 @@ $q2 = mysqli_query($conn, $sq);
           <th>Food Name</th>
           <th>Quantity</th>
           <th>Price</th>
-          <th>Order Time</th>
+          <th>Date</th>
+          <th>Time</th>
+         
 
         </thead>
         <tbody>
@@ -36,7 +41,8 @@ $q2 = mysqli_query($conn, $sq);
               <td><?php echo $row['food name']; ?></td>
               <td><?php echo $row['foodquantity']; ?></td>
               <td><?php echo $row['food total price']; ?></td>
-              <td><?php echo $row['Order_time']; ?></td>
+              <td><?php echo $row['date']; ?></td>
+              <td><?php echo $row['time']; ?></td>
 
             </tr>
           <?php } ?>

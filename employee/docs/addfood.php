@@ -32,7 +32,7 @@ include 'header.php';
               </div>
               <div class="form-group">
                 <label class="control-label"><b>FOOD IMAGE</b></label>
-                <input type="file" name="file" id="file" class="form-control" accept="image/png, image/gif, image/jpeg">
+                <input type="file" name="file" id="file" class="form-control" accept="image/png, image/gif, image/jpeg" onchange="return filevalid();">
                 <span id="i1" style="color:red"></span>
               </div>
               <div class="form-group">
@@ -137,10 +137,21 @@ include 'header.php';
   function Clear() {
     document.getElementById("f1").innerHTML = "";
     document.getElementById('d1').innerHTML = "";
-    // document.getElementById('i1').innerHTML="";
+    document.getElementById('i1').innerHTML = "";
     document.getElementById('p1').innerHTML = "";
     document.getElementById('c1').innerHTML = "";
     return false;
+  }
+
+  function filevalid() {
+    var im = document.myform.file;
+    var filePath = im.value;
+    var img = /(\.jpg|\.png|\.jpeg)$/i;
+    if (!img.exec(filePath)) {
+      document.getElementById('i1').innerHTML = "**Please choose a image !!";
+      return false;
+    }
+
   }
 </script>
 </body>

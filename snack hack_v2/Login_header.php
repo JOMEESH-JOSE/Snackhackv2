@@ -7,9 +7,11 @@ if ($uid == "") {
   header('location:Login.php');
 }
 
-$DD = "SELECT * FROM `chef_book` join chef_reg_tb on chef_reg_tb.Lg_id=chef_book.chef_id JOIN user_registration_tb on `user_registration_tb`.`login-id`=chef_book.user_id WHERE  chef_book.status='YES' OR chef_book.status='REJECT' AND `user_registration_tb`.`login-id`='$uid'";
+$DD = "SELECT * FROM `chef_book` join chef_reg_tb on chef_reg_tb.Lg_id=chef_book.chef_id JOIN user_registration_tb on `user_registration_tb`.`login-id`=chef_book.user_id WHERE  `user_registration_tb`.`login-id`='$uid'";
 $a = mysqli_query($conn,$DD);
 $count = mysqli_num_rows($a);
+$cart = mysqli_query($conn,"SELECT foodid FROM `cart` where Lg_id='$uid'");
+$count2=mysqli_num_rows($cart);
 ?>
 
 <!DOCTYPE html>
@@ -68,7 +70,7 @@ $count = mysqli_num_rows($a);
           <li class="nav-item"><a class="nav-link" href="index2.php">Home</a></li>
             <li class="nav-item"><a class="nav-link" href="OnlineBooking.php?pid=1">Food Booking</a></li>
             <li class="nav-item"><a class="nav-link" href="ChefBooking.php">Chef Booking</a></li>
-            <li class="nav-item"><a class="nav-link" href="cart3.php">Cart</a></li>
+            <li class="nav-item"><a class="nav-link" href="cart3.php">Cart<i class="fa fa-shopping-cart" aria-hidden="true"></i><?php echo $count2; ?></a></li>
             <li class="nav-item"><a class="nav-link" href="Reservation.php">Table Reservation</a></li>
             <li class="nav-item"><a class="nav-link" href="contact2.php">Contact</a></li>
             <li class="nav-item "><a class="nav-link" href="Notifications.php"><i class="fa fa-envelope" aria-hidden="true"></i><?php echo $count; ?></a></li>

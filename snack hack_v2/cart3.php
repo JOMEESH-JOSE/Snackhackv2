@@ -26,21 +26,7 @@ echo"<script>window.location='cart3.php';</script>";
 }
 
 if(isset($_POST['order'])){
-	$foodid=intval($_POST['food_id']);
-	
-	$car2 = mysqli_query($conn,"SELECT * FROM `cart` where Lg_id='$uid'");
-	while($row = mysqli_fetch_array($car2)){
 
-	
-
-	$fd_id = intval($row['foodid']);
-	$foodquantity=$row['quantity'];
-	$foodprice=$row['totalprice'];
-	$order="INSERT INTO `order_tb`(`food_id`,`table_id`,`foodquantity`, `food total price`,`status`) VALUES ('$fd_id','$tb','$foodquantity', '$foodprice',0)";
-	$or1=mysqli_query($conn,$order);
-	// $del=mysqli_query($conn,"DELETE  FROM `cart` WHERE table_id='$tb'");
-
-	}
 	echo "<script>alert('item ordered successfully');</script>";
 	echo"<script>window.location='checkout.php'</script>";
 	// echo"<script>window.location='payment.php?t_id= ".$tb."'</script>";

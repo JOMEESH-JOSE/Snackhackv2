@@ -95,7 +95,7 @@ if (isset($_POST['btn'])) {
 
             <div class="form-group">
               <label class="control-label">IMAGE</label>
-              <input class="form-control" type="file" name="file" placeholder="enter image" accept="image/png, image/gif, image/jpeg">
+              <input class="form-control" type="file" name="file" placeholder="enter image" accept="image/png, image/gif, image/jpeg" onchange="return filevalid();">
 
             </div>
 
@@ -237,6 +237,12 @@ if (isset($_POST['btn'])) {
         document.myform.file.focus();
         return false;
       }
+      var img = /(\.jpg|\.png|\.jpeg)$/i; 
+      if (!img.test(document.myform.file.value)) {
+        alert("please enter valid image");
+        return false;
+
+      }
       if (document.myform.address.value.trim() == "") {
         alert("Please put your address");
         document.myform.address.focus();
@@ -271,6 +277,17 @@ if (isset($_POST['btn'])) {
       }
       if (!filter.test(y)) {
         alert("please enter valid email like xyz@gmail.com/xyz@gmail.in");
+        return false;
+
+      }
+      if (document.myform.file2.value == "") {
+        alert("Please put your  image");
+        document.myform.file.focus();
+        return false;
+      }
+      var img = /(\.jpg|\.png|\.jpeg)$/i; 
+      if (!img.test(document.myform.file2.value)) {
+        alert("please enter valid image");
         return false;
 
       }
@@ -323,6 +340,16 @@ if (isset($_POST['btn'])) {
       var key = event.keyCode;
       return ((key >= 65 && key <= 90) || key == 8);
     };
+    function filevalid(){
+	var im = document.myform.file;
+	var filePath = im.value;
+	var img = /(\.jpg|\.png|\.jpeg)$/i;
+	if(!img.exec(filePath)){
+		alert("Please choose a image !!");
+		return false;
+	}
+
+}
   </script>
   <script>
     $(document).ready(function() {
