@@ -48,6 +48,75 @@ $count2=mysqli_num_rows($cart);
       <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
       <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif] -->
+    <style>
+    .pageheader {
+        background-color: white;
+        height: 8%;
+        box-shadow: 0px 0px 1px 0px;
+        padding-bottom: 5%;
+    }
+
+    .navitems {
+        margin: 1% 5% 0% 30%;
+        float: right;
+    }
+
+    .navitems ul {
+        text-align: center;
+        text-decoration: none;
+        list-style: none;
+    }
+
+    .navitems ul li {
+        display: inline-block;
+        padding-right: 20px;
+        font-size: 18px;
+    }
+
+    li a,
+    .dropbtn {
+        display: inline-block;
+        text-align: center;
+        padding: 8px 13px;
+        text-decoration: none;
+        font-size: 17px;
+        border-radius:5px;
+        
+    }
+
+    li a:hover,
+    .dropdown:hover .dropbtn {
+        background-color: orangered;
+
+    }
+
+    li.dropdown {
+        display: inline-block;
+
+    }
+
+    .dropdown-content {
+        display: none;
+        position: absolute;
+        min-width: 160px;
+        z-index: 1;
+        margin-top: 2%
+    }
+
+    .dropdown-content a {
+        color: black;
+        padding: 12px 16px;
+        text-decoration: none;
+        display: block;
+        text-align: left;
+        font-size:16px;
+    }
+
+
+    .dropdown:hover .dropdown-content {
+        display: block;
+    }
+</style>
 
 </head>
 
@@ -69,9 +138,22 @@ $count2=mysqli_num_rows($cart);
           <ul class="navbar-nav ml-auto">
           <li class="nav-item"><a class="nav-link" href="index2.php">Home</a></li>
             <li class="nav-item"><a class="nav-link" href="OnlineBooking.php?pid=1">Food Booking</a></li>
-            <li class="nav-item"><a class="nav-link" href="ChefBooking.php">Chef Booking</a></li>
+            <li class="dropdown">
+              <a href="javascript:void(0)" class="dropbtn">BOOKING</a>
+              <div class="dropdown-content">
+                <a href="ChefBooking.php">Chef Booking</a>
+                <a href="bookingdetails.php">Booking Details</a>
+              </div>
+            </li>
             <li class="nav-item"><a class="nav-link" href="cart3.php">Cart<i class="fa fa-shopping-cart" aria-hidden="true"></i><?php echo $count2; ?></a></li>
-            <li class="nav-item"><a class="nav-link" href="Reservation.php">Table Reservation</a></li>
+            <!-- <li class="nav-item"><a class="nav-link" href="Reservation.php">Table Reservation</a></li> -->
+            <li class="dropdown">
+              <a href="javascript:void(0)" class="dropbtn">RESERVATION</a>
+              <div class="dropdown-content">
+                <a href="Reservation.php">Table Reservation</a>
+                <a href="reservationdetails.php">Reservation Details</a>
+              </div>
+            </li>
             <li class="nav-item"><a class="nav-link" href="contact2.php">Contact</a></li>
             <li class="nav-item "><a class="nav-link" href="Notifications.php"><i class="fa fa-envelope" aria-hidden="true"></i><?php echo $count; ?></a></li>
             <!-- <li class="nav-item "><a class="nav-link" href="Profile.php">Profile</a></li>
@@ -90,6 +172,8 @@ $count2=mysqli_num_rows($cart);
 
                       <div class="user-menu dropdown-menu">
                        <a class="nav-link" href="Profile.php">Profile</a>
+                       <a class="nav-link" href="change_password.php">Change Password</a>
+                       <a class="nav-link" href="Orderdetails.php">My Orders</a>
                        <a class="nav-link" href="logout.php">Logout</a>
                       </div>
                     </div>

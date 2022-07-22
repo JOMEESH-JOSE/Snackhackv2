@@ -24,7 +24,7 @@ if($sql){
     //@$username = $_POST['uruname'];
    
     $db_data=array();
-    $sql1=mysqli_query($db,"UPDATE `registraion_tb` SET `name`='$name',`address`='$address',`pin`='$pin',`email`='$email',`phno`='$phno' WHERE  Lg_id='$rid'");
+    $sql1=mysqli_query($db,"UPDATE `registration_tb1` SET `name`='$name',`address`='$address',`pin`='$pin',`email`='$email',`phno`='$phno' WHERE  Lg_id='$rid'");
     if($sql1){
         echo json_encode('Success');
  }else{

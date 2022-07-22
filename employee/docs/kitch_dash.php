@@ -6,8 +6,11 @@ include 'db.php';
 date_default_timezone_set('Asia/Kolkata');
 $date = date('Y-m-d');
 
-$sq = "SELECT * FROM `order_tb` join `food_tb` on food_tb.fd_id = order_tb.food_id WHERE  order_tb.status ='0' AND order_tb.Payment_status='PAID'";
-$sq1="SELECT f.`food name`,o.table_id,o.foodquantity,o.`food total price`,DATE(o.`Order_time`) AS date,TIME(o.`Order_time`)AS time FROM `order_tb` o,food_tb f WHERE status='DELIVERED' AND Payment_status='PAID' AND o.food_id = f.fd_id and DATE(o.Order_time)='$date'";
+//$sq = "SELECT order_tb.table_id,order_tb.foodquantity,`food_tb`.`food name`,DATE(order_tb.Order_time) AS date,TIME( order_tb.Order_time)AS time,tbl_payment.P_Amount,order_tb.order_id FROM `order_tb` JOIN food_tb on food_tb.fd_id=order_tb.food_id join tbl_payment on tbl_payment.payment_id=order_tb.Payment_id WHERE order_tb.status='0' AND tbl_payment.P_status='PAID'and DATE(order_tb.Order_time)='$date' AND order_tb.table_id != '0'";
+$sq = "SELECT payment_id,id,P_Amount,P_status,DATE(order_time) as date,TIME(order_time) as time FROM `tbl_payment` WHERE P_status='PAID' AND DATE(order_time)='$date'AND id!=0";
+//$sq1="SELECT order_tb.table_id,order_tb.foodquantity,`food_tb`.`food name`,DATE(order_tb.Order_time) AS date,TIME( order_tb.Order_time)AS time,tbl_payment.P_Amount FROM `order_tb` JOIN food_tb on food_tb.fd_id=order_tb.food_id join tbl_payment on tbl_payment.payment_id=order_tb.Payment_id WHERE order_tb.status='DELIVERED' AND tbl_payment.P_status='PAID' AND DATE(order_tb.Order_time)='$date'";
+$sq1 = "SELECT payment_id,id,P_Amount,P_status,DATE(order_time) as date,TIME(order_time) as time FROM `tbl_payment` WHERE P_status='DELIVERED' AND DATE(order_time)='$date' AND id!=0 ";
+
 $q2=mysqli_query($conn,$sq);
 $q3=mysqli_query($conn,$sq1);
 
@@ -30,17 +33,24 @@ $q3=mysqli_query($conn,$sq1);
             <table class="table table-bordered">
   <thead class="table-light">
   <th>Table number</th>
-    <th>Food Name</th>
-    <th>Quantity</th>
-    <th>Action</th>
+    <th>Order_id</th>
+    <th>Amount</th>
+    <th>Order_Time</th>
+    <th>Order_Date</th>
+    <th>Status</th>
+    <th colspan="2">Action</th>
   </thead>
   <tbody>
     <?php while($row = mysqli_fetch_array($q2)){?>
       <tr>
-      <td><?php echo $row['table_id']; ?></td>
-      <td><?php echo $row['food name']; ?></td>
-      <td><?php echo $row['foodquantity']; ?></td>
-     <td> <a href="or_status.php?or_id=<?php echo $row['order_id'];?>&& ss=0"><Button type="submit" class="btn btn-primary">DELIVER</Button></a></td>
+      <td><?php echo $row['id']; ?></td>
+      <td><?php echo $row['payment_id']; ?></td>
+      <td><?php echo $row['P_Amount']; ?></td>
+      <td><?php echo $row['time']; ?></td>
+      <td><?php echo $row['date']; ?></td>
+      <td><span class="badge badge-danger"><?php echo $row['P_status'];?></span></td>
+      <td><a href="detail2k.php?id=<?php echo $row['payment_id']; ?>"><button class="btn btn-">Detail</button></a>
+    <a href="or_status.php?or_id=<?php echo $row['payment_id'];?>&& ss=0"><Button type="submit" class="btn btn-primary">DELIVER</Button></a></td>
       </tr>
       <?php } ?>
   </tbody>
@@ -53,22 +63,24 @@ $q3=mysqli_query($conn,$sq1);
             <table class="table table-bordered" id="sampleTable">
   <thead class="table-light">
   <th>Table number</th>
-    <th>Food Name</th>
-    <th>Quantity</th>
-    <th>Total price</th>
-    <th>Date</th>
+    <th>Order_id</th>
+    <th>Amount</th>
     <th>Time</th>
+    <th>Date</th>
+    <th>Status</th>
+    <th>Action</th>
   </thead>
   <tbody>
     <?php while($row1 = mysqli_fetch_array($q3)){?>
       <tr>
-      <td><?php echo $row1['table_id']; ?></td>
-      <td><?php echo $row1['food name']; ?></td>
-      <td><?php echo $row1['foodquantity']; ?></td>
-      <td><?php echo $row1['food total price']; ?></td>
-      <td><?php echo $row1['date']; ?></td>
+      <td><?php echo $row1['id']; ?></td>
+      <td><?php echo $row1['payment_id']; ?></td>
+      <td><?php echo $row1['P_Amount']; ?></td>
       <td><?php echo $row1['time']; ?></td>
-      </tr>
+      <td><?php echo $row1['date']; ?></td>  
+      <td><span class="badge badge-danger"><?php echo $row1['P_status'];?></span></td>
+      <td><a href="detail2k.php?id=<?php echo $row1['payment_id']; ?>"><button class="btn btn-">Detail</button></a></td>
+    </tr>
       <?php } ?>
   </tbody>
 </table>

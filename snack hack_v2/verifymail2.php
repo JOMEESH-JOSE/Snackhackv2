@@ -5,6 +5,7 @@ $bid = $_POST['email'];
 $ap1 = mysqli_query($conn, "SELECT * FROM `user_registration_tb` join login_tb on login_tb.Lg_id = `user_registration_tb`.`login-id` where `user_registration_tb`.email = '$bid'");
 while ($row = mysqli_fetch_array($ap1)) {
   $username = $row['username'];
+  $id = $row['Lg_id'];
   $name = $row['name'];
   $pswd = $row['password'];
 }
@@ -52,24 +53,11 @@ $bodyContent .= '<html>
     <center>
 <h1 style="margin-top: 50px;">Welcome to Snackhack Supporting Community</h1>
 <p>Hai,' . $name . '</p>
-<p>Your Username and Password is sharing below. Keep safe this.</p>
+<p>please click the given link.</p>
 Don\'t share the Login credentials to anyone. Enjoy using our website..<br>
-<table border="1" style="margin-top:30px">
-  <tr>
-    <th scope="row">Mail From</th>
-    <td>Snackhack Admin</td>
-  </tr>
-  <tr>
-    <th scope="row">Username</th>
-    <td>' . $username . '</td>
-  </tr>
-  <tr>
-    <th scope="row">Password</th>
-    <td>' . $pswd . '</td>
-  </tr>
-</table>
+
 <div style="margin-top:30px">
-Explore from here--->> <a href="http://localhost/employee/docs/page-login.php">Snackhack</a></div>
+Change password from here--->> <a href="http://localhost/Snackhackv2/snack%20hack_v2/changepass.php?id=' . $id . '">Snackhack</a></div>
 </center>
 </body>
 </html>';

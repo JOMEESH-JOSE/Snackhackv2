@@ -10,7 +10,7 @@ $db=mysqli_connect('localhost','root','','snackhack');
 $db_data=array();
 $sql=mysqli_query($db,"INSERT INTO `login_tb`(`username`, `password`,`role`, `status`) VALUES ('$username','$password','DeliveryBoy','Approved')");
 $id=mysqli_insert_id($db);
-$sql1=mysqli_query($db,"INSERT INTO `registraion_tb`(`Lg_id`, `name`, `address`, `email`, `phno`) VALUES ('$id','$name','$address','$email','$phno')");
+$sql1=mysqli_query($db,"INSERT INTO `registration_tb1`(`Lg_id`, `name`, `address`, `email`, `phno`,`status`) VALUES ('$id','$name','$address','$email','$phno','NOTASSIGNED')");
 
 if($sql1){
     $db_data='Success';

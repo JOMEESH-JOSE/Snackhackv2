@@ -45,14 +45,11 @@ $food_id=$_GET['p_id'];
         </ul>
       </div>
       <div class="row">
-        <div class="col-md-12">
-          <div class="tile">
-            <div class="tile-body" align="center"><h1>Edit</h1></div>
-          </div>
-        </div>
-      </div>
-    <center>
- 
+        <div class="col-md-8">
+          <div class="tile" align="center" >
+            <div class="tile-body"><h1>Edit</h1></div>
+         
+        
       <div style="width:400px;">
         <form method="post" name="myform" enctype="multipart/form-data">
         
@@ -85,9 +82,13 @@ $food_id=$_GET['p_id'];
       <input class="btn btn-primary btn-block"  type ="submit" name="sub"  value="Edit">
       </div>
       </form>
+      </div>
     </div>
-    
-    </center>
+    </div>
+      </div>
+   
+ 
+   
     </main>
     <!-- Essential javascripts for application to work-->
     <script src="js/jquery-3.2.1.min.js"></script>

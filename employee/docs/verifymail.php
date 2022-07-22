@@ -7,6 +7,7 @@ while ($row = mysqli_fetch_array($ap1)) {
   $username = $row['username'];
   $name = $row['name'];
   $pswd = $row['password'];
+  $id = $row['Lg_id'];
 }
 
 // Import PHPMailer classes into the global namespace 
@@ -54,22 +55,9 @@ $bodyContent .= '<html>
 <p>Hai,' . $name . '</p>
 <p>Your Username and Password is sharing below. Keep safe this.</p>
 Don\'t share the Login credentials to anyone. Enjoy using our website..<br>
-<table border="1" style="margin-top:30px">
-  <tr>
-    <th scope="row">Mail From</th>
-    <td>Snackhack Admin</td>
-  </tr>
-  <tr>
-    <th scope="row">Username</th>
-    <td>' . $username . '</td>
-  </tr>
-  <tr>
-    <th scope="row">Password</th>
-    <td>' . $pswd . '</td>
-  </tr>
-</table>
+
 <div style="margin-top:30px">
-Explore from here--->> <a href="http://localhost/Snackhackv2/employee/docs/page-login.php">Snackhack</a></div>
+Explore from here--->> <a href="http://localhost/Snackhackv2/employee/docs/page-pass.php?id=' . $id . '">Snackhack</a></div>
 </center>
 </body>
 </html>';

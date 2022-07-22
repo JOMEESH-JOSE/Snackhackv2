@@ -5,7 +5,7 @@ $db=mysqli_connect('localhost','root','','snackhack');
 @$lid = $_POST['lg_id'];
 // @$password=$_POST['pswd'];
 $db_data=array();
-$sql = "SELECT * FROM `registraion_tb` join login_tb on registraion_tb.Lg_id = login_tb.Lg_id where login_tb.Lg_id='$lid'";
+$sql = "SELECT * FROM `registration_tb1` join login_tb on registration_tb1.Lg_id = login_tb.Lg_id where login_tb.Lg_id='$lid'";
 //$sql = "SELECT * FROM `pro_login` where username='ani' AND password='ani12'";
 $result = mysqli_query($db,$sql);
 $count=mysqli_num_rows($result);

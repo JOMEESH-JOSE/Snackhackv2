@@ -73,6 +73,7 @@ while ($row = mysqli_fetch_array($sql)) {
         <ul class="dropdown-menu settings-menu dropdown-menu-right">
 
           <li><a class="dropdown-item" href="chef_profile.php"><i class="fa fa-user fa-lg"></i> Profile</a></li>
+          <li><a class="dropdown-item" href="chefchangepass.php"><i class="fa fa-lock fa-lg"></i> Change Password</a></li>
           <li><a class="dropdown-item" href="../logout.php"><i class="fa fa-sign-out fa-lg"></i> Logout</a></li>
         </ul>
       </li>
@@ -91,5 +92,6 @@ while ($row = mysqli_fetch_array($sql)) {
       <li><a class="app-menu__item active" href="chef_dash.php"><i class="app-menu__icon fa fa-dashboard"></i><span class="app-menu__label">Dashboard</span></a></li>
       <li class="treeview"><a class="app-menu__item" href="chef_viewproduct.php"><i class="app-menu__icon fa fa-file-text"></i><span class="app-menu__label">View Items</span></a>
       <li class="treeview"><a class="app-menu__item" href="chef_viewnotification.php"><i class="app-menu__icon fa fa-file-text"></i><span class="app-menu__label">View Notification</span></a>
+      <li class="treeview"><a class="app-menu__item" href="online2.php"><i class="app-menu__icon fa fa-file-text"></i><span class="app-menu__label">Online Order Details</span></a>
     </ul>
   </aside>

@@ -100,14 +100,14 @@ background: #707070;
 			</div>
 			
 			<div class="row inner-menu-box">
-				<div class="col-3">
+				<div class="col-2">
 					<div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
                         <?php while ($row = mysqli_fetch_array($sql)){ ?>
 						<a class="nav-link" id="v-pills-<?php echo $row['category_id']; ?>-tab" href="OnlineBooking.php?pid=<?php echo $row['category_id']; ?>" role="tab" aria-controls="v-pills-<?php echo $row['category_id']; ?>" aria-selected="true"><?php echo $row['category']; ?></a>
                         <?php } ?>
 					</div>
 				</div>
-                <div class="col-9">
+                <div class="col-10">
 					<div class="tab-content" id="v-pills-tabContent">
                         <div class="row">
                     <?php  
@@ -125,13 +125,13 @@ background: #707070;
 											<h4>Available Quantity:<?php echo $raw['quantity']; ?></h4>
 											<h5>Rs<?php echo $raw['food_price']; ?></h5>
 											<?php if($raw['quantity'] == 0) { ?>
-												<p style="color:red"> Food Outofstock</p>
+												<h style="color:red"> Food Outofstock</h>
 
 										<?php } else { ?>	
 
 											<input type="hidden" name="foodid" value="<?php echo $raw['fd_id']; ?>">
 											
-											<input type="number" name="quantity" min="1"style="width:60px;" required>
+											<input type="number" name="quantity" min="1" max="<?php echo $raw['quantity']; ?>" style="width:60px;" required>
 											<input type="submit" style="margin-top:-2px" class="btn-warning"  name="cart" value="add to cart">
 											<!-- <input type="hidden" name="foodname" value="<?php echo $raw['food name']; ?>">
 											<input type="hidden" name="price" value="<?php echo $raw['food_price']; ?>"> -->
@@ -150,101 +150,7 @@ background: #707070;
 	</div>
 	<!-- End Menu -->
 	<br>
-	<div class="container">
-            <div class="row blog">
-                <div class="col-md-12">
-                    <div id="blogCarousel" class="carousel slide" data-ride="carousel">
-
-                        <ol class="carousel-indicators">
-                            <li data-target="#blogCarousel" data-slide-to="0" class="active"></li>
-                            <li data-target="#blogCarousel" data-slide-to="1"></li>
-                        </ol>
-
-                        <!-- Carousel items -->
-                        <div class="carousel-inner">
-
-                            <div class="carousel-item active">
-                                <div class="row">
-                                    <div class="col-md-3">
-                                        <a href="#">
-                                            <img src="https://mdbootstrap.com/img/Photos/Horizontal/Food/4-col/img%20(53).jpg" alt="Image" height="180px" width="250px" style="max-width:100%;">
-                                            
-                                        </a>
-                                    </div>
-                                    <div class="col-md-3">
-                                        <a href="#">
-                                            <img src="https://mdbootstrap.com/img/Photos/Horizontal/Food/4-col/img%20(51).jpg" alt="Image" height="180px" width="250px" style="max-width:100%;">
-                                            
-                                        </a>
-                                    </div>
-                                    <div class="col-md-3">
-                                        <a href="#">
-                                            <img src="https://i0.wp.com/italiantouch.com.au/wp-content/uploads/2018/06/Big-Breakfast.jpg" alt="Image" height="180px" width="250px" style="max-width:100%;">
-                                            
-                                        </a>
-                                    </div>
-                                    <div class="col-md-3">
-                                        <a href="#">
-                                            <img src="https://www.michels.com.au/app/uploads/2018/07/Big-Breakfast.jpg" alt="Image" height="180px" width="250px" style="max-width:100%;">
-                                            
-                                        </a>
-                                    </div>
-                                </div>
-                                <!--.row-->
-                            </div>
-                            <!--.item-->
-
-                            <div class="carousel-item">
-                                <div class="row">
-                                    <div class="col-md-3">
-                                        <a href="#">
-                                           <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRRrrbon2NL50tgA_gB_y2kXSBNle-iQC4ky6diWC7RmYl-gIcDNqWj-U0546kRfBhH7_8&usqp=CAU" alt="Image" height="180px" width="250px" style="max-width:100%;">
-                                            
-                                        </a>
-                                    </div>
-                                    <div class="col-md-3">
-                                        <a href="#">
-                                             <img src="http://www.myadmintemplate.com/images/slideImage10.jpg" alt="Image" height="180px" width="250px" style="max-width:100%;">
-                                            
-                                        </a>
-                                    </div>
-                                    <div class="col-md-3">
-                                        <a href="#">
-                                            <img src="https://myfoodbook.com.au/sites/default/files/styles/sr_mo/public/recipe_photo/Eggs20151375.jpg" alt="Image" height="180px" width="250px" style="max-width:100%;">
-                                        </a>
-                                    </div>
-                                    <div class="col-md-3">
-                                        <a href="#">
-                                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRZ-eXxxLoYdp_KeAfpqtMI9QxtXipqprADicTyeV2yBulHyTnEP_scSCjlDwVEj7RhAbg&usqp=CAU" alt="Image" height="180px" width="250px" style="max-width:100%;">
-                                        </a>
-                                    </div>
-                                </div>
-                                <!--.row-->
-                            </div>
-                            <!--.item-->
-
-                        </div>
-                        <!--.carousel-inner-->
-                    </div>
-                    <!--.Carousel-->
-
-                </div>
-            </div>
-</div>
-<br><br><br>
-	<!-- Start QT -->
-	<div class="qt-box qt-background">
-		<div class="container">
-			<div class="row">
-				<div class="col-md-8 ml-auto mr-auto text-center">
-					<p class="lead ">
-						" If you're not the one cooking, stay out of the way and compliment the chef. "
-					</p>
-					<span class="lead">JOMEESH JOSE</span>
-				</div>
-			</div>
-		</div>
-	</div>
+	
 	<!-- End QT -->
 	
 	<!-- Start Contact info -->

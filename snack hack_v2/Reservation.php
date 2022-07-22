@@ -4,7 +4,7 @@ include 'db.php';
 error_reporting(0);
 session_start();
 $uid = $_SESSION['UserID'];
-$ss = mysqli_query($conn,"SELECT * FROM `user_registration_tb` where `login-id`=$uid");
+$ss = mysqli_query($conn,"SELECT * FROM `user_registration_tb` where `login-id`='$uid'");
 $row = mysqli_fetch_assoc($ss);
 	$name = $row['name'];
 	$phno = $row['phno'];
@@ -93,18 +93,15 @@ $row = mysqli_fetch_assoc($ss);
 					  <option value="select">Select Time</option>
                        <option value="7:00_AM">7:00 AM</option>
 					   <option value="8:00_AM">8:00 AM</option>
-					   <option value="9:00_AM">9:00 AM</option>
-					   <option value="10:00_AM">10:00 AM</option>
-					   <option value="11:00_AM">11:00 AM</option>
+					   
 					   <option value="12:00_PM">12:00 PM</option>
 					   <option value="1:00_PM">1:00 PM</option>
 					   <option value="2:00_PM">2:00 PM</option>
-					   <option value="3:00_PM">3:00 PM</option>
-					   <option value="4:00_PM">4:00 PM</option>
-					   <option value="5:00_PM">5:00 PM</option>
-					   <option value="6:00_PM">6:00 PM</option>
+					   
 					   <option value="7:00_PM">7:00 PM</option>
+					   <option value="8:00_PM">8:00 PM</option>
 					  </select>
+					  <p style="color:red">* Reservation only available in Peek Time</p>
 		            </div>
 		            <div class="form-group">
 		            	<input type="submit" name="Book" class="form-control btn btn-primary rounded submit px-3" value="Book">
@@ -307,9 +304,11 @@ $tb_type = $_POST['tb_type'];
 	$count = mysqli_num_rows($ch);
 	if($count == 0){
 
-		$hh = mysqli_query($conn,"INSERT INTO `reservation`(`Lg_id`,`type`, `Table_no`, `b_date`, `b_time`) VALUES ('$uid','$tb_type','$tb_no', '$date', '$time')");
+		$hh = mysqli_query($conn,"INSERT INTO `reservation`(`Lg_id`,`type`, `Table_no`, `b_date`, `b_time`,`P_status`) VALUES ('$uid','$tb_type','$tb_no', '$date', '$time','pending')");
+		$id = mysqli_insert_id($conn);
 		echo "<script type='text/javascript'> alert('You have successfully reserved a table');</script>";
-		header("Location:Reservation.php");
+		echo "<script type='text/javascript'> location='razobook.php?id=$id'</script>";
+		
 
 	}
 	else{

@@ -27,8 +27,8 @@ if (isset($_POST['save'])) {
   $username1 = $_POST['username'];
   $password1 = $_POST['password'];
 
-  $lgup = "UPDATE `login_tb` SET `username`='$username1',`password`='$password1' WHERE Lg_id = '$UserID'";
-  mysqli_query($conn, $lgup);
+  // $lgup = "UPDATE `login_tb` SET `username`='$username1',`password`='$password1' WHERE Lg_id = '$UserID'";
+  // mysqli_query($conn, $lgup);
   $up = mysqli_query($conn, "UPDATE `registraion_tb` SET `name`='$name1',`gender`='$genders1',`dob`='$dob1',`image`='$image1',`address`='$address1',`district_id`='$district1',`city_id`='$city1',`pin`='$pin1',`email`='$email1',`phno`='$phno1' WHERE Lg_id='$UserID'");
 }
 $sql = mysqli_query($conn, "SELECT * FROM `registraion_tb` inner join `login_tb` on login_tb.Lg_id = registraion_tb.Lg_id join city on city.id=registraion_tb.city_id join district on district.id=registraion_tb.district_id where login_tb.Lg_id='$UserID'");
@@ -75,7 +75,7 @@ while ($row = mysqli_fetch_array($sql)) {
               <p>Email :<?php echo $row['email']; ?></p>
               <p>Phno :<?php echo $row['phno']; ?></p>
               <p>Username :<?php echo $row['username']; ?></p>
-              <p>Password :<?php echo $row['password']; ?></p>
+              <!-- <p>Password :<?php echo $row['password']; ?></p> -->
               <p>Role :<?php echo $row['role']; ?></p>
             </div>
             <div class="tab-pane fade" id="user-settings">
@@ -145,10 +145,10 @@ while ($row = mysqli_fetch_array($sql)) {
                         alert("username can't be edited");
                       }
                     </script>
-                    <div class="col-md-4">
+                    <!-- <div class="col-md-4">
                       <label>Password</label>
-                      <input class="form-control" type="text" name="password" value="<?php echo $row['password']; ?>">
-                    </div>
+                      <input class="form-control" type="hidden" name="password" value="<?php echo $row['password']; ?>">
+                    </div> -->
                   </div>
 
                   <!-- <input class="form-control" type="text" name="role"value="<?php echo $row['role']; ?>"> -->

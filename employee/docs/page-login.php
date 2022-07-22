@@ -48,7 +48,7 @@
         </div>
         <div class="form-group btn-container">
           <!-- <i class="fa fa-sign-in fa-lg fa-fw"></i> -->
-          <input type="submit" class="btn btn-primary btn-block" name="submit" value="SIGN IN">
+          <input type="submit" class="btn btn-primary btn-block" name="submit" id="submit" value="SIGN IN">
         </div>
       </form>
 
@@ -94,8 +94,9 @@
     session_start();
     $uname = $_POST['uname'];
     $password = $_POST['pswd'];
-
+   
     $sql = mysqli_query($conn, "SELECT * FROM `login_tb` where username='$uname' and  password='$password'");
+    
     while ($row = mysqli_fetch_array($sql)) {
       if ($row['status'] == 'Approved') {
 
@@ -112,8 +113,9 @@
         } elseif ($row['role'] == 'kitchen boy') {
           $_SESSION['UserID'] = $row['Lg_id'];
           header("location: kitch_dash.php");
-        } else {
-          echo '<script>alert("invalid credentials");</script>';
+        } else {?>
+          <script>alert("invalid credentials");</script>
+          <?php
           header("location:page-login.php");
         }
       } else {

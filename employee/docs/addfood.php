@@ -68,7 +68,7 @@ include 'header.php';
                 <span id="c1" style="color:red"></span>
               </div>
               <div class="form-group mt-3">
-                <input class="btn btn-primary btn-block" type="submit" name="sub" value="SUBMIT">
+                <input class="btn btn-primary btn-block" type="submit" name="sub" id="ss" value="SUBMIT">
               </div>
             </form>
           </div>

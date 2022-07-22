@@ -96,29 +96,28 @@ background: #707070;
 			</div>
 			
 			<div class="row inner-menu-box">
-				<div class="col-3">
+				<div class="col-2">
 					<div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
                         <?php while ($row = mysqli_fetch_array($sql)){ ?>
 						<a class="nav-link" id="v-pills-<?php echo $row['category_id']; ?>-tab" href="menu.php?pid=<?php echo $row['category_id']; ?>" role="tab" aria-controls="v-pills-<?php echo $row['category_id']; ?>" aria-selected="true"><?php echo $row['category']; ?></a>
                         <?php } ?>
 					</div>
 				</div>
-                <div class="col-9">
+                <div class="col-10">
 					<div class="tab-content" id="v-pills-tabContent">
                         <div class="row">
                     <?php  
                             $result = mysqli_query($conn,"SELECT * FROM food_tb where category_id='$sid'");
                                 while ($raw = mysqli_fetch_array($result)){ ?>
 								
-								<div class="col-lg-5 col-md-6 special-grid 1">
+								<div class="col-lg-5 col-md-5 special-grid 1">
 								<!-- <form method="post" action="cart_manage1.php"> -->
 								<form method="post" action="menu.php?pid=<?php echo $sid; ?>">
 									<div class="gallery-single fix">
 										<img src="../employee/docs/image/<?php echo $raw['food_img']; ?>"  alt="Image" class="img-fluid">
 										<div class="why-text">
 											<h4><?php echo $raw['food name']; ?></h4>
-											<p><?php echo $raw['description']; ?></p>
-											<h4>Available Quantity:<?php echo $raw['quantity']; ?></h4>
+											<h4><?php echo $raw['description']; ?></h4>
 											<h5>Rs<?php echo $raw['food_price']; ?></h5>
 											<?php if($raw['quantity'] == 0) { ?>
 												<p style="color:red"> Food Outofstock</p>
@@ -127,7 +126,7 @@ background: #707070;
 
 											<input type="hidden" name="foodid" value="<?php echo $raw['fd_id']; ?>">
 											
-											<input type="number" name="quantity" min="1" max="10" maxlength="2" minlength="2" style="width:60px;" required>
+											<input type="number" name="quantity" min="1" max="<?php echo $raw['quantity']; ?>" maxlength="2" minlength="2" style="width:60px;" required>
 											<input type="submit" style="margin-top:-2px" class="btn-warning"  name="cart" value="add to cart">
 											<!-- <input type="hidden" name="foodname" value="<?php echo $raw['food name']; ?>">
 											<input type="hidden" name="price" value="<?php echo $raw['food_price']; ?>"> -->
@@ -146,7 +145,7 @@ background: #707070;
 	</div>
 	<!-- End Menu -->
 	<br>
-	<div class="container">
+	<!-- <div class="container">
             <div class="row blog">
                 <div class="col-md-12">
                     <div id="blogCarousel" class="carousel slide" data-ride="carousel">
@@ -157,7 +156,7 @@ background: #707070;
                         </ol>
 
                         <!-- Carousel items -->
-                        <div class="carousel-inner">
+                        <!-- <div class="carousel-inner">
 
                             <div class="carousel-item active">
                                 <div class="row">
@@ -186,10 +185,10 @@ background: #707070;
                                         </a>
                                     </div>
                                 </div>
-                                <!--.row-->
-                            </div>
+                                <row-->
+                            <!-- </div> -->
                             <!--.item-->
-
+<!-- 
                             <div class="carousel-item">
                                 <div class="row">
                                     <div class="col-md-3">
@@ -214,19 +213,19 @@ background: #707070;
                                             <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRZ-eXxxLoYdp_KeAfpqtMI9QxtXipqprADicTyeV2yBulHyTnEP_scSCjlDwVEj7RhAbg&usqp=CAU" alt="Image" height="180px" width="250px" style="max-width:100%;">
                                         </a>
                                     </div>
-                                </div>
+                                </div> --> 
                                 <!--.row-->
-                            </div>
+                            <!-- </div> -->
                             <!--.item-->
 
-                        </div>
+                        <!-- </div> -->
                         <!--.carousel-inner-->
-                    </div>
+                    <!-- </div> -->
                     <!--.Carousel-->
 
-                </div>
-            </div>
-</div>
+                <!-- </div> -->
+            <!-- </div>  -->
+<!-- </div> -->
 <br><br><br>
 	<!-- Start QT -->
 	<div class="qt-box qt-background">

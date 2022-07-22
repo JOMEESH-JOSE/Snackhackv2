@@ -23,16 +23,18 @@ if(isset($_POST['submit'])){
 	$date = $_POST['date'];
 	$event = $_POST['event'];
 	$people = $_POST['people'];
+	$time= $_POST['time'];
 	$sq = mysqli_query($conn,"SELECT bookdate FROM `chef_book` WHERE bookdate='$date'");
 	$count = mysqli_num_rows($sq);
 	if($count == 0){
-		$as = mysqli_query($conn,"INSERT INTO `chef_book`(`user_id`, `chef_id`, `event`, `peoples`, `bookdate`,`status`) VALUES ('$uid','$id','$event','$people','$date','NO')");
-		echo "<script type='text/javascript'> alert('You have successfully Book a chef');</script>";
+		$as = mysqli_query($conn,"INSERT INTO `chef_book`(`user_id`, `chef_id`, `event`, `peoples`,`bookdate`,`time`,`status`) VALUES ('$uid','$id','$event','$people','$date','$time','NO')");
+		//echo "<script type='text/javascript'> alert('You have successfully Book a chef');</script>";
+                echo"<script>window.location.href='bookingdetails.php'</script>";
 	}
     else{
 		echo "<script type='text/javascript'> alert('Sorry this Booking date is already Reserved');</script>";
 	}
-	// header("Location:ChefBooking.php");
+	 //header("Location:bookingdetails.php");
 }
 ?>
 <br><br><br><br>
@@ -132,17 +134,25 @@ if(isset($_POST['submit'])){
                     </div>
 					<div class="row mt-3">
 					<div class="col-md-6">
+                        <label class="fs-4">Time</label>
+                        <div><input type="time" class="form-control" name="time" id="time"   onclick="return cl();" ></div>
+                    </div>
+					<div class="col-md-6">
                         <label class="fs-4">No of Peoples</label>
-                        <div><input type="number" class="form-control" name="people" id="people"  max="100" onclick="return cl();" ></div>
+                        <div><input type="number" class="form-control" name="people" id="people"  min="1" max="100" onblur="return check();" onclick="return cl();" ></div>
                     </div>
-					
+					</div><div>
 					<div class="col-md-6" >
-                        <label class="fs-4">Amount Calculated</label>
-                        <div ><input type="text" class="form-control" id="amount" name ="result"></div>
+                        <label class="fs-4">Chef Labour Charge</label>
+                        <div ><input type="text" class="form-control" id="amount" name ="result" value ="<?php echo $qq['labour']; ?>" readonly></div>
+						<p style="color:red">*Labour Charge will be change according to their work</p>
                     </div>
+					<!-- <div class="col-md-6" >
+                    <input type="file" capture="user" accept="image/*" >
+					</div> -->
                     </div>
 					<div><span id="table" style="color:red"></span></div>
-                    				<div class="mt-5 text-center"><input type="submit" name="submit" class="btn btn-primary profile-button" value="Book" ></div>
+                    				<div class="mt-5 text-center"><input type="submit" name="submit" class="btn btn-primary profile-button" id="ss" value="Book" ></div>
                     </form>
                 </div>
             </div>
@@ -220,6 +230,7 @@ if(isset($_POST['submit'])){
 var a = document.getElementById('date').value.trim();
 var b = document.getElementById('people').value.trim();
 var c = document.getElementById('sel').value;
+var d = document.getElementById('time').value;
 if(a==""){
 
 document.getElementById("table").innerHTML="**please select the date**";
@@ -227,6 +238,9 @@ return false;
 }
 else if(c =="select"){
 	document.getElementById("table").innerHTML="**please select the event type**";
+return false;
+}else if(d ==""){
+	document.getElementById("table").innerHTML="**please select the Time**";
 return false;
 }
 else if(b<10){
@@ -261,24 +275,38 @@ $(function(){
     $('#date').attr('min', minDate);
 });
 </script>
-<script>
-//  $( "#amount" ).load( "ajax/response.html #div-with-new-content" ); 
+//<script>
+// //  $( "#amount" ).load( "ajax/response.html #div-with-new-content" ); 
  
-$(document).ready(function () {
-        $(function () {
-            $("#people").on("blur", function () {
-                updateTotalNetVehicle();
-            });
+// $(document).ready(function () {
+//         $(function () {
+//             $("#people").on("blur", function () {
+//                 updateTotalNetVehicle();
+//             });
 
-        });
-    });
+//         });
+//     });
 
-     var updateTotalNetVehicle = function () {
-                var input1 = parseInt($('#people').val()) || 0;
-                var number1 = <?php echo $price; ?>;
-                var sum = input1 * number1;
-                $('#amount').val('$' + sum.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,'));
-            }; </script>
+//      var updateTotalNetVehicle = function () {
+//                 var input1 = parseInt($('#people').val()) || 0;
+//                 var number1 = <?php echo $price; ?>;
+//                 var sum = input1 * number1;
+//                 $('#amount').val('$' + sum.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,'));
+//             }; </script>
+<script> 
+
+function check(){
+	var b = document.getElementById('people').value;
+	if(b > 101 ){
+		document.getElementById("table").innerHTML="**please enter the value Less than or equal to 100**";
+		return false;
+	}
+	else{
+		return true;
+	}
+}
+
+</script>
 	<script src="js/jquery-3.2.1.min.js"></script>
 	<script src="js/popper.min.js"></script>
 	<script src="js/bootstrap.min.js"></script>

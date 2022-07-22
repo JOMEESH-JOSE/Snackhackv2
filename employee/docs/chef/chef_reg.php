@@ -109,6 +109,11 @@
               <input class="form-control" type="text" name="expert" placeholder="enter you are expert in">
 
             </div>
+            <div class="form-group">
+              <label class="control-label">Labor Fee</label>
+              <input class="form-control" type="number" name="fee" min="1" max='5000' placeholder="enter you are Labour Charge">
+
+            </div>
 
             <div class="form-group">
               <label class="control-label">USERNAME</label>
@@ -246,7 +251,7 @@
         return false;
 
       }
-
+  
       if (document.myform.files.value == "") {
         alert("Please put your proof");
         document.myform.files.focus();
@@ -261,6 +266,11 @@
       if (document.myform.expert.value == "") {
         alert("Please put you are Expert in");
         document.myform.expert.focus();
+        return false;
+      }
+      if (document.myform.fee.value.trim() == "") {
+        alert("Please put Labor Charge");
+        document.myform.fee.focus();
         return false;
       }
       if (document.myform.uname.value.trim() == "") {
@@ -373,9 +383,10 @@ if (isset($_POST['btn'])) {
   $targetFilePath = $targetDir . $pfile;
   move_uploaded_file($_FILES["files"]["tmp_name"], $targetFilePath);
 
-
+  $fee = $_POST['fee'];
   $uname = $_POST['uname'];
   $pswd = $_POST['pswd'];
+ // $passhash = password_hash($pswd,PASSWORD_DEFAULT);//encription
   //   $role=$_POST['role'];
   $valid = mysqli_query($conn, "select * from login_tb where username = '$uname'");
   if (mysqli_num_rows($valid) > 0) {
@@ -385,7 +396,7 @@ if (isset($_POST['btn'])) {
     $sq = "INSERT INTO `login_tb`(`username`, `password`, `role`, `status`) VALUES ('$uname','$pswd','chef','Notactive')";
     if (mysqli_query($conn, $sq)) {
       $roleID = mysqli_insert_id($conn);
-      $creg = "INSERT INTO `chef_reg_tb`( `Lg_id`, `name`, `gender`, `dob`, `image`, `address`, `district_id`, `city_id`, `pin`, `email`, `phno`, `experience`, `proof`,`Expert`) VALUES ('$roleID','$name','$gender','$dob','$image','$address','$district','$city','$pin','$email','$phno','$exp','$pfile','$expert')";
+      $creg = "INSERT INTO `chef_reg_tb`( `Lg_id`, `name`, `gender`, `dob`, `image`, `address`, `district_id`, `city_id`, `pin`, `email`, `phno`, `experience`, `proof`,`Expert`,`labour`) VALUES ('$roleID','$name','$gender','$dob','$image','$address','$district','$city','$pin','$email','$phno','$exp','$pfile','$expert','$fee')";
       // $reg="INSERT INTO `registraion_tb`(`Lg_id`, `name`, `gender`, `dob`,`image`,`address`, `district_id`, `city_id`, `pin`, `email`, `phno`) VALUES ('$roleID','$name','$gender','$dob','$image','$address','$district','$city','$pin','$email','$phno')";
       mysqli_query($conn, $creg);
       echo "<script>alert(' registeration successfully')</script>";

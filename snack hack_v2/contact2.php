@@ -44,13 +44,13 @@ while ($row = mysqli_fetch_array($ss)){
 						<div class="row">
 							<div class="col-md-9">
 								<div class="form-group">
-									<input type="text" class="form-control" id="name" name="name" value="<?php echo $name; ?>"  placeholder="Your Name" readonly onclick="return alrt();">
+									<input type="hidden" class="form-control" id="name" name="name" value="<?php echo $name; ?>"  placeholder="Your Name" readonly onclick="return alrt();">
 									<p style="color:red" name="name"></p>
 								</div>                                 
 							</div>
 							<div class="col-md-9">
 								<div class="form-group">
-									<input type="text"  id="email" class="form-control" name="email" value="<?php echo $email; ?>" placeholder="Your Email" readonly onclick="return alrt();">
+									<input type="hidden"  id="email" class="form-control" name="email" value="<?php echo $email; ?>" placeholder="Your Email" readonly onclick="return alrt();">
 									<p style="color:red" name="email"></p>
 								</div> 
 							</div>

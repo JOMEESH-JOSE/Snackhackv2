@@ -44,7 +44,7 @@ $sq=mysqli_query($conn,"SELECT * FROM login_tb inner join registraion_tb on regi
                     <td><?php echo $row['username']; ?></td>
                     <td><?php echo $row['password']; ?></td>
                     <td><?php echo $row['role']; ?></td>
-                    <td><?php echo $row['status']; ?></td>
+                    <td><span class="badge badge-danger"><?php echo $row['status']; ?></span></td>
                     <td><a href="view.php?lg=<?php echo $row['Lg_id']; ?>"><button type="submit" class="btn btn-primary">View</button></a></td>
                     <td> <?php if ($row['status'] == 'Blocked') { ?>
                             <p><a href="userstatus.php?sid=<?php echo $row['Lg_id']; ?>&&sts=1&&eml=<?php echo $eml; ?>"><button class="btn btn-primary">Enable</button></a></p>

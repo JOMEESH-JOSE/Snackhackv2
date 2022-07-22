@@ -1,8 +1,7 @@
 <?php
 include 'man_header.php';
 include 'db.php';
-$sq = "SELECT * FROM `order_tb` join `food_tb` on food_tb.fd_id = order_tb.food_id WHERE  order_tb.status ='0' AND order_tb.Payment_status='NOT_PAID'";
-
+$sq = "SELECT payment_id,id,P_Amount,P_status,DATE(order_time) as date,TIME(order_time) as time FROM `tbl_payment` WHERE P_status='NOTPAID'";
 $q2 = mysqli_query($conn, $sq);
 ?>
 <main class="app-content">
@@ -23,23 +22,23 @@ $q2 = mysqli_query($conn, $sq);
             <table class="table table-bordered">
                 <thead class="table-light">
                     <th>Table number</th>
-                    <th>Food Name</th>
-                    <th>Quantity</th>
-                    <th>Price</th>
+                    <th>Order_id</th>
+                    <th>Amount</th>
                     <th>Order Time</th>
+                    <th>Order Date</th>
                     <th>Payment Status</th>
                     <th>Action</th>
                 </thead>
                 <tbody>
                     <?php while ($row = mysqli_fetch_array($q2)) { ?>
                         <tr>
-                            <td><?php echo $row['table_id']; ?></td>
-                            <td><?php echo $row['food name']; ?></td>
-                            <td><?php echo $row['foodquantity']; ?></td>
-                            <td><?php echo $row['food total price']; ?></td>
-                            <td><?php echo $row['Order_time']; ?></td>
-                            <td><?php echo $row['Payment_status']; ?></td>
-                            <td><a href="payment_update.php?a_id=<?php echo $row['order_id'];?>"><Button type="submit" class="btn btn-">PAY</Button></td>
+                            <td><?php echo $row['id']; ?></td>
+                            <td><?php echo $row['payment_id']; ?></td>
+                            <td><?php echo $row['P_Amount']; ?></td>
+                            <td><?php echo $row['time']; ?></td>
+                            <td><?php echo $row['date']; ?></td>
+                            <td><span class="badge badge-danger"><?php echo $row['P_status']; ?></span></td>
+                            <td><a href="payment_update.php?a_id=<?php echo $row['payment_id'];?>"><Button type="submit" class="btn btn-">PAY</Button></td>
                         </tr>
                     <?php } ?>
                 </tbody>

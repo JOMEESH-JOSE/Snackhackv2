@@ -5,7 +5,7 @@ $db=mysqli_connect('localhost','root','','snackhack');
 @$username = $_POST['urname'];
 @$password=$_POST['pswd'];
 $db_data=array();
-$sql = "SELECT * FROM `login_tb` where username='$username' AND password='$password'";
+$sql = "SELECT * FROM `login_tb` where username='$username' AND password='$password' and status ='Approved'";
 //$sql = "SELECT * FROM `pro_login` where username='ani' AND password='ani12'";
 $result = mysqli_query($db,$sql);
 $count=mysqli_num_rows($result);

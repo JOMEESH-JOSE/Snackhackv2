@@ -17,7 +17,7 @@ $city = $row['city'];
 $pin = $row['pin'];
 $image = $row['image'];
 $username = $row['username'];
-$password = $row['password'];
+// $password = $row['password'];
 $role = $row['role'];
 ?>
 <br><br><br>
@@ -82,10 +82,10 @@ $role = $row['role'];
                         
                     </div>
                     
-                        <div class="col-md-6">
+                        <!-- <div class="col-md-6">
                         <label class="fs-4">Password</label>
                         <div><input type="text" class="form-control" name="password" value="<?php echo $password; ?>"></div>
-                    </div>
+                    </div> -->
                     </div>
                     <div><span id="t" style="color:red"></span></div>
                     <div class="mt-5 text-right"><input type="submit" name="save" class="btn btn-primary profile-button" value="Save Profile" ></div>

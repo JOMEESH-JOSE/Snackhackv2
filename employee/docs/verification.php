@@ -45,7 +45,7 @@ include 'db.php';
                   <td><?php echo $v['username'] ?></td>
                   <td><?php echo $v['password'] ?></td>
                   <td><img src="image/<?php echo $v['adhar'] ?>"width=40px height=40px></td>
-                  <td><?php echo $v['status'] ?></td>
+                  <td><span class="badge badge-danger"><?php echo $v['status'] ?></span></td>
                  
                   <td>
                  <a href="approve.php?a_id=<?php echo $v['Lg_id'];?>&& ss=1&&em=<?php echo $em; ?>"><Button type="submit" class="btn btn-primary">Accept</Button></a>
@@ -100,7 +100,7 @@ include 'db.php';
                   <td><img src="image/<?php echo $v['proof'] ?>"width=40px height=40px id="img1" onclick="return enlargeImg();"></td>
                   <td><?php echo $v['experience'] ?></td>
                  
-                  <td><?php echo $v['status'] ?></td>
+                  <td><span class="badge badge-danger"><?php echo $v['status'] ?></span></td>
                  
                   <td>
                  <a href="capproved.php?a_id=<?php echo $v['Lg_id'];?>&& ss=1&&em=<?php echo $em1; ?>" ><Button type="submit" class="btn btn-primary">Accept</Button></a>
@@ -117,6 +117,53 @@ include 'db.php';
         </div>
 
         <!-- customer -->
+        
+          <!-- <div class="tile"> -->
+           
+          <div class="clearfix"></div>
+         <div class="col-md-9">
+          <div class="tile">
+            <h3 class="tile-title"> DeliveryBoy Action Table</h3>
+            <table class="table table-bordered" id="sampleTable2">
+              <thead>
+                <tr>
+                  <th>NAME</th>
+                  <th>Username</th>
+                  <th>Password</th>
+                  
+                  
+                  <th>Status</th>
+                  <th colspan="3">Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                <?php 
+                $ver="SELECT  `registration_tb1`.`name`,`registration_tb1`.`Lg_id`, `login_tb`.`status`,login_tb.username,login_tb.password,`registration_tb1`.`email` FROM `registration_tb1` join `login_tb` on login_tb.Lg_id = registration_tb1.Lg_id WHERE `login_tb`.`status` ='Notactive'";
+                $veri=mysqli_query($conn,$ver);
+                while($v1=mysqli_fetch_array($veri))
+                {
+                $em1 = $v1['email'];
+
+                ?>
+                <tr>
+                  <td><?php echo $v1['name'] ?></td>
+                  <td><?php echo $v1['username'] ?></td>
+                  <td><?php echo $v1['password'] ?></td>
+                  <td><span class="badge badge-danger"><?php echo $v1['status'] ?></span></td>
+                  <td>
+                 <a href="Dapproved.php?a_id=<?php echo $v1['Lg_id'];?>&& ss=1&&em=<?php echo $em1; ?>" ><Button type="submit" class="btn btn-primary">Accept</Button></a>
+                 <a href="Dapproved.php?a_id=<?php echo $v1['Lg_id'] ;?>&& ss=2&&em=<?php echo $em1; ?>"><Button type="submit" class="btn btn-primary">Reject</Button></a>
+                </td>
+                  
+                </tr>
+                <?php
+                }
+                ?>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
                  
           
        

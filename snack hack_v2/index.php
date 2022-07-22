@@ -1,8 +1,21 @@
 <?php
 include 'header.php';
+include 'db.php';
 error_reporting(0);
 @session_start();
 $_SESSION['tb_id'] = $_GET['t_id'];
+$tb = $_SESSION['tb_id'];
+$ip = getHostByName(gethostname());
+$sq = mysqli_query($conn,"SELECT * FROM `tbl_ipaddress` where Table_no='$tb' and ipaddress !='$ip' and status='1' or status='2'");
+$count = mysqli_num_rows($sq);
+if($count >= 1){
+// echo "<script>location:waitingpage.php</script>";
+header("location:waitingpage.php?tb=$tb");
+}else{
+
+	$sq2 = mysqli_query($conn,"INSERT INTO `tbl_ipaddress`(`Table_no`, `ipaddress`, `status`) VALUES ('$tb','$ip','1')");
+}
+
 ?>
 	
 	<!-- Start slides -->

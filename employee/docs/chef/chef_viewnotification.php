@@ -4,7 +4,7 @@ session_start();
 $uid = $_SESSION['UserID'];
 include 'db.php';
 $sq2= mysqli_query($conn, "SELECT * FROM `chef_book` join user_registration_tb on user_registration_tb.`login-id`= chef_book.user_id WHERE chef_id='$uid' AND status ='NO'");
-
+$ss = mysqli_query($conn,"SELECT `chef_book`.`peoples`, `chef_book`.`bookdate`, `chef_book`.`time`, `chef_book`.`status`,user_registration_tb.name,user_registration_tb.phno FROM `chef_book` join user_registration_tb on `user_registration_tb`.`login-id` = chef_book.user_id WHERE chef_book.status='YES' and chef_book.chef_id='$uid'");
 ?>
 <main class="app-content">
   <div class="app-title">
@@ -17,7 +17,6 @@ $sq2= mysqli_query($conn, "SELECT * FROM `chef_book` join user_registration_tb o
       <li class="breadcrumb-item"><a href="#">Booking View</a></li>
     </ul>
   </div>
-
   <div class="col-md-9">
     <div class="tile">
       <h3 class="tile-title">Booking Table</h3>
@@ -45,7 +44,37 @@ $sq2= mysqli_query($conn, "SELECT * FROM `chef_book` join user_registration_tb o
       </table>
     </div>
   </div>
+<!-- second -->
+  <div class="col-md-9">
+    <div class="tile">
+      <h3 class="tile-title">Booking Details Table</h3>
+      <table class="table table-bordered">
+        <thead class="table-light">
+          <th>Customer Name</th>
+          <th>Contact Number</th>
+          <th>Booking Date</th>
+          <th>Booking Time</th>
+          <th>No of Peoples</th>
+         
+         
 
+        </thead>
+        <tbody>
+          <?php while ($row = mysqli_fetch_array($ss)) { ?>
+            <tr>
+              <td><?php echo $row['name']; ?></td>
+              <td><?php echo $row['phno']; ?></td>
+              <td><?php echo $row['bookdate']; ?></td>
+              <td><?php echo $row['time']; ?></td>
+              <td><?php echo $row['peoples']; ?></td>
+            </tr>
+          <?php } ?>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <!-- second -->
+  
 </main>
 <!-- Essential javascripts for application to work-->
 <script src="js/jquery-3.2.1.min.js"></script>

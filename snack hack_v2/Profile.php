@@ -17,7 +17,7 @@ $city = $row['c_name'];
 $pin = $row['pin'];
 $image = $row['image'];
 $username = $row['username'];
-$password = $row['password'];
+// $password = $row['password'];
 $role = $row['role'];
 ?>
 <br><br><br>
@@ -69,10 +69,10 @@ $role = $row['role'];
                         <th><td><p class="fs-4">UserName : </p></td></th>
                         <th><td><p class="fs-4"><?php echo $username; ?></p></td></th>
                    </tr>  
-                   <tr>
+                   <!-- <tr>
                         <th><td><p class="fs-4">Password : </p></td></th>
                         <th><td><p class="fs-4"><?php echo $password; ?></p></td></th>
-                   </tr>
+                   </tr> -->
                     <tr><th><td><a href="v_profile.php"><input type="submit" name="save" class="btn btn-primary profile-button" value="Edit Profile" ></a></td></th></tr>
                 </div>
             </div>

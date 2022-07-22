@@ -2,8 +2,6 @@
 include 'man_header.php';
 include 'db.php';
 $sql=mysqli_query($conn,"SELECT * FROM `food_tb` inner join category_tb on category_tb.category_id=food_tb.category_id");
-
- 
 ?>
 
     <main class="app-content">
@@ -21,10 +19,12 @@ $sql=mysqli_query($conn,"SELECT * FROM `food_tb` inner join category_tb on categ
       <div class="row">
         <div class="col-md-12">
           <div class="tile">
-            <div class="tile-body">
-              <button type="button" class="btn btn-" >PDF</button>&ensp;<button type="button" class="btn btn-" >CSV</button>
+          <button type="button" class="btn btn-" onclick="printDiv('print')" >PDF</button>
+            <div class="tile-body" id="print">
+              
               <br><br>
               <table class="table table-hover table-bordered" id="sampleTable">
+                
               <thead>
                 <tr>
                     <th>Food Name</th>
@@ -53,6 +53,7 @@ $sql=mysqli_query($conn,"SELECT * FROM `food_tb` inner join category_tb on categ
                 </tbody>
               </table>
             </div>
+            </div>
           </div>
         </div>
       </div>
@@ -69,16 +70,19 @@ $sql=mysqli_query($conn,"SELECT * FROM `food_tb` inner join category_tb on categ
     <script type="text/javascript" src="js/plugins/jquery.dataTables.min.js"></script>
     <script type="text/javascript" src="js/plugins/dataTables.bootstrap.min.js"></script>
     <script type="text/javascript">$('#sampleTable').DataTable();</script>
-    <!-- Google analytics script-->
+
+    <!-- print screen -->
     <script type="text/javascript">
-      if(document.location.hostname == 'pratikborsadiya.in') {
-      	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-      	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-      	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-      	})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-      	ga('create', 'UA-72504830-1', 'auto');
-      	ga('send', 'pageview');
-      }
+      function printDiv(divName) {
+     var printContents = document.getElementById(divName).innerHTML;
+     var originalContents = document.body.innerHTML;
+
+     document.body.innerHTML = printContents;
+
+     window.print();
+
+     document.body.innerHTML = originalContents;
+}
     </script>
   </body>
 </html>

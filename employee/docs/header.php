@@ -48,6 +48,7 @@ while($row = mysqli_fetch_array($sql)){
           <ul class="dropdown-menu settings-menu dropdown-menu-right">
            
             <li><a class="dropdown-item" href="profile.php"><i class="fa fa-user fa-lg"></i> Profile</a></li>
+            <li><a class="dropdown-item" href="kitchangepass.php"><i class="fa fa-lock fa-lg"></i> Change Password</a></li>
             <li><a class="dropdown-item" href="logout.php"><i class="fa fa-sign-out fa-lg"></i> Logout</a></li>
           </ul>
         </li>
@@ -64,7 +65,8 @@ while($row = mysqli_fetch_array($sql)){
       </div>
       <ul class="app-menu">
         <li><a class="app-menu__item active" href="kitch_dash.php"><i class="app-menu__icon fa fa-dashboard"></i><span class="app-menu__label">Dashboard</span></a></li>
-        <li class="treeview"><a class="app-menu__item" href="addfood.php"><i class="app-menu__icon fa fa-file-text"></i><span class="app-menu__label">Add Food Items</span></a>
-        <li class="treeview"><a class="app-menu__item" href="viewproduct.php"><i class="app-menu__icon fa fa-file-text"></i><span class="app-menu__label">View Items</span></a>
+        <li class="treeview"><a class="app-menu__item" href="addfood.php"><i class="app-menu__icon fa fa-plus-circle"></i><span class="app-menu__label">Add Food Items</span></a>
+        <li class="treeview"><a class="app-menu__item" href="viewproduct.php"><i class="app-menu__icon fa fa-shopping-bag"></i><span class="app-menu__label">View Items</span></a>
+        <li class="treeview"><a class="app-menu__item" href="onlineorder.php"><i class="app-menu__icon fa fa-shopping-cart"></i><span class="app-menu__label">Online Order Details</span></a>
       </ul>
     </aside>

@@ -6,8 +6,10 @@ $sqltb = mysqli_query($conn, "SELECT * FROM `city` JOIN `district` ON city.d_id 
 $sql_db = mysqli_query($conn, "SELECT * FROM `district`");
 $ft = mysqli_query($conn, "SELECT * FROM `food_tb` JOIN category_tb ON food_tb.category_id = category_tb.category_id");
 $ca4 = mysqli_query($conn, "SELECT * FROM `category_tb`");
-$ca10 = mysqli_query($conn, "SELECT * FROM `order_tb` JOIN food_tb ON order_tb.food_id = food_tb.fd_id");
-$ca11= mysqli_query($conn, "SELECT chef_book.*,user_registration_tb.name as uname,chef_reg_tb.* FROM `chef_book`JOIN user_registration_tb on user_registration_tb.`login-id` = chef_book.user_id JOIN chef_reg_tb ON chef_reg_tb.Lg_id=chef_book.chef_id where status='YES'");
+$ca10 = mysqli_query($conn, "SELECT `payment_id`, `id`, `P_Amount`, `P_status`,DATE(`order_time`) as date,TIME(`order_time`) as time FROM `tbl_payment` WHERE P_status='DELIVERED' AND id!='0'");
+$cat5=mysqli_query($conn, "SELECT `user_registration_tb`.`name`,`tbl_payment`.`payment_id`, `tbl_payment`.`P_Amount`, `tbl_payment`.`P_status`,DATE(`tbl_payment`.`order_time`) as date,`tbl_payment`.`landmark`,`tbl_payment`.`deliveryboy`,`tbl_payment`.`delivery_status` FROM `tbl_payment` JOIN user_registration_tb on `user_registration_tb`.`login-id` = tbl_payment.Lg_id WHERE P_status='PAID' AND Lg_id!='0'");
+$ca11= mysqli_query($conn, "SELECT chef_book.ch_id,chef_book.`event`, chef_book.`peoples`, chef_book.`bookdate`, chef_book.`status`,user_registration_tb.name,chef_reg_tb.name as Na,tbl_event.eventname
+FROM chef_book join user_registration_tb on user_registration_tb.`login-id`=chef_book.user_id JOIN chef_reg_tb on chef_reg_tb.Lg_id=chef_book.chef_id JOIN tbl_event on tbl_event.ev_id = chef_book.event");
 // $nn = mysqli_query($conn, "SELECT * FROM `");
 $rej = mysqli_query($conn, "SELECT * FROM login_tb inner join registraion_tb on registraion_tb.Lg_id = login_tb.Lg_id WHERE login_tb.status = 'Rejected'");
 ?>
@@ -60,6 +62,12 @@ $rej = mysqli_query($conn, "SELECT * FROM login_tb inner join registraion_tb on 
                 <H5>Order Table :</H5>
               </label>
             <td><a href="table-basic.php?id=5"><button class="btn btn-primary">View</button></a></td>
+          </tr>
+          <tr>
+            <td> <label class="control-label">
+                <H5>Online Order Table :</H5>
+              </label>
+            <td><a href="table-basic.php?id=5.5"><button class="btn btn-primary">View</button></a></td>
           </tr>
           <tr>
             <td> <label class="control-label">
@@ -190,15 +198,17 @@ $rej = mysqli_query($conn, "SELECT * FROM login_tb inner join registraion_tb on 
 
     <div class="tile">
       <h3 class="tile-title">Order Table <a href="Printorder.php" target="_blank"><button type="button" name="order" value="pdf">Print</button></a></h3>
-      <table class="table">
+      <table class="table" id="sampleTable">
         <thead>
         <tr>
 
 <th>Order ID</th>
-<th>Food Name</th>
-<th>Food Quantity</th>
+<th>Table No</th>
 <th>Food TotalPrice</th>
+<th>Order Status</th>
 <th>Time</th>
+<th>Date</th>
+
 </tr>
         </thead>
         <tbody>
@@ -206,11 +216,13 @@ $rej = mysqli_query($conn, "SELECT * FROM login_tb inner join registraion_tb on 
 
           while ($c2 = mysqli_fetch_array($ca10)) { ?>
             <tr>
-              <td><?php echo $c2["order_id"]; ?></td>
-              <td><?php echo $c2["food name"]; ?></td>
-              <td><?php echo $c2["foodquantity"]; ?></td>
-              <td>Rs.<?php echo $c2["food total price"]; ?></td>
-              <td><?php echo $c2["Order_time"]; ?></td>
+              <td><?php echo $c2["payment_id"]; ?></td>
+              <td><?php echo $c2["id"]; ?></td>
+              <td>Rs.<?php echo $c2["P_Amount"]; ?></td>
+              <td><?php echo $c2["P_status"]; ?></td>
+              <td><?php echo $c2["time"]; ?></td>
+              <td><?php echo $c2["date"]; ?></td>
+              <td><a href='admin_or_details.php?id=<?php echo $c2["payment_id"]; ?>'><button type="button" class="btn btn-">Details</button></a></td>
             </tr>
           <?php
           }
@@ -218,10 +230,46 @@ $rej = mysqli_query($conn, "SELECT * FROM login_tb inner join registraion_tb on 
         </tbody>
       </table>
     </div>
-    <?php } else if ($val == 6) { ?>
+    <?php } else if ($val == 5.5) { ?>
 
 <div class="tile">
   <h3 class="tile-title">Order Table </h3>
+  <table class="table" id="sampleTable">
+    <thead>
+    <tr>
+
+<th>Customer</th>
+<th>Total Amount</th>
+<th>Payment Status</th>
+<th>Delivery Boy</th>
+<th>Delivery Status</th>
+<th>Date</th>
+
+</tr>
+    </thead>
+    <tbody>
+      <?php
+
+      while ($c = mysqli_fetch_array($cat5)) { ?>
+        <tr>
+          <td><?php echo $c["name"]; ?></td>
+          <td>Rs.<?php echo $c["P_Amount"]; ?></td>
+          <td><?php echo $c["P_status"]; ?></td>
+          <td><?php echo $c["deliveryboy"]; ?></td>
+          <td><?php echo $c["delivery_status"]; ?></td>
+          <td><?php echo $c["date"]; ?></td>
+          <td><a href='admin_or_details2.php?id=<?php echo $c["payment_id"]; ?>'><button type="button" class="btn btn-">Details</button></a></td>
+        </tr>
+      <?php
+      }
+      ?>
+    </tbody>
+  </table>
+</div>
+    <?php } else if ($val == 6) { ?>
+
+<div class="tile">
+  <h3 class="tile-title">ChefBooking Table </h3>
   <table class="table">
     <thead>
       
@@ -231,6 +279,9 @@ $rej = mysqli_query($conn, "SELECT * FROM login_tb inner join registraion_tb on 
 <th>Customer Name</th>
 <th>Chef Name</th>
 <th>Booking Date</th>
+<th>Event</th>
+<th>No.of Peoples</th>
+
 </tr>
     </thead>
     <tbody>
@@ -239,9 +290,11 @@ $rej = mysqli_query($conn, "SELECT * FROM login_tb inner join registraion_tb on 
       while ($c22 = mysqli_fetch_array($ca11)) { ?>
         <tr>
           <td><?php echo $c22["ch_id"]; ?></td>
-          <td><?php echo $c22["uname"]; ?></td>
           <td><?php echo $c22["name"]; ?></td>
+          <td><?php echo $c22["Na"]; ?></td>
           <td><?php echo $c22["bookdate"]; ?></td>
+          <td><?php echo $c22["eventname"]; ?></td>
+          <td><?php echo $c22["peoples"]; ?></td>
         </tr>
       <?php
       }
@@ -274,7 +327,7 @@ $rej = mysqli_query($conn, "SELECT * FROM login_tb inner join registraion_tb on 
                 <td><?php echo $rr["name"]; ?></td>
                 <td><?php echo $rr["username"]; ?></td>
                 <td><?php echo $rr["password"]; ?></td>
-                <td><?php echo $rr["status"]; ?></td>
+                <td><span class="badge badge-danger"><?php echo $rr["status"]; ?></span></td>
               </tr>
             <?php } ?>
           </tbody>
@@ -296,6 +349,10 @@ $rej = mysqli_query($conn, "SELECT * FROM login_tb inner join registraion_tb on 
 <script src="js/popper.min.js"></script>
 <script src="js/bootstrap.min.js"></script>
 <script src="js/main.js"></script>
+<!-- Data table plugin-->
+<script type="text/javascript" src="js/plugins/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="js/plugins/dataTables.bootstrap.min.js"></script>
+    <script type="text/javascript">$('#sampleTable').DataTable();</script>
 <!-- The javascript plugin to display page loading on top-->
 <script src="js/plugins/pace.min.js"></script>
 <!-- Page specific javascripts-->
